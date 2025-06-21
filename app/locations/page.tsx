@@ -392,7 +392,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
             {cities.map((city) => (
               <Link key={city.slug} href={`/locations/${city.slug}`} className="group">
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 h-full transition-all duration-300 hover:shadow-lg hover:border-primary-200 hover:-translate-y-1">
