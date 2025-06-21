@@ -1,0 +1,19 @@
+# robots.txt for Redhawk Relocation
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://redhawkrelocation.com/sitemap.xml
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /dashboard/
+
+# Crawl delay for specific bots
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10

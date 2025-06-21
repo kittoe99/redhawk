@@ -1,0 +1,34 @@
+"use client"
+
+import { useEffect, useState } from "react"
+
+export function SimpleHawkLoader() {
+  const [loading, setLoading] = useState(true)
+
+  // Only show loader on initial page load
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false)
+    }, 800)
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (!loading) return null
+
+  return (
+    <div className="hawk-loader-container active" aria-hidden="false">
+      <div className="hawk-loader">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#d30000">
+          <path
+            d="M22,2L12,13L10,10L22,2z M4.7,19.3c-0.39,0.39-0.39,1.02,0,1.41c0.39,0.39,1.02,0.39,1.41,0L10,17.41
+            L6.59,14L4.7,15.89c-0.39,0.39-0.39,1.02,0,1.41C5.09,17.7,5.72,17.7,6.11,17.3L7.59,16L9,17.41L7.11,19.3
+            c-0.39,0.39-0.39,1.02,0,1.41c0.39,0.39,1.02,0.39,1.41,0L11,18.41l4.3,4.3c0.39,0.39,1.02,0.39,1.41,0
+            c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.41L22.59,2H22z"
+          />
+        </svg>
+        <div className="hawk-loader-text">LOADING...</div>
+      </div>
+    </div>
+  )
+}

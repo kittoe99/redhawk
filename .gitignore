@@ -1,0 +1,35 @@
+# Node / PNPM
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Testing coverage
+coverage/
+
+# Environment variables
+.env
+.env.*
+
+# macOS / Windows thumbnail files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor directories
+.idea/
+.vscode/
+
+# Static build / dist folders
+build/
+dist/
+
+# Misc
+.vercel/
+.turbo/
+.nitro/
