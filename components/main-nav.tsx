@@ -488,31 +488,31 @@ export function MainNav() {
                 </div>
               </div>
 
-              {/* Create Account Section */}
-              <div className="bg-gradient-to-r from-gray-50 to-gray-100 py-5 border-t border-gray-200">
-                <div className="px-5 mb-4">
-                  <h3 className="text-xs font-bold text-gray-600 uppercase tracking-wider flex items-center">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                    Create Account
-                  </h3>
-                </div>
-                <div className="grid grid-cols-2 gap-3 px-5">
-                  {accountItems.map((item, index) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="group flex flex-col items-center justify-center p-4 rounded-2xl bg-gradient-to-br from-primary-600 via-primary-500 to-primary-600 hover:from-primary-700 hover:via-primary-600 hover:to-primary-700 border border-primary-700 hover:border-primary-800 shadow-lg hover:shadow-2xl transition-all duration-300 text-white transform hover:-translate-y-1 hover:scale-105"
+              {/* Create Account Section - Minimalist */}
+              <div className="bg-white py-4 border-t border-gray-100">
+                <div className="px-5">
+                  <div className="text-center text-sm text-gray-500 mb-3">
+                    Create an account for a better experience
+                  </div>
+                  <div className="flex justify-center gap-4">
+                    <Link 
+                      href="/register" 
+                      className="text-sm font-medium text-primary-600 hover:text-primary-800 hover:underline flex items-center gap-1.5"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      <div className="bg-white/20 p-2 rounded-xl mb-2 group-hover:bg-white/30 transition-all duration-200">
-                        {item.icon}
-                      </div>
-                      <span className="text-xs font-bold tracking-wide text-white">{item.label}</span>
-                      <span className="text-xs text-primary-100 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-200">
-                        {item.href === '/login' ? 'Access account' : 'Create account'}
-                      </span>
+                      <UserPlus className="h-3.5 w-3.5" />
+                      Sign Up
                     </Link>
-                  ))}
+                    <span className="text-gray-300">|</span>
+                    <Link 
+                      href="/login" 
+                      className="text-sm font-medium text-gray-600 hover:text-gray-900 hover:underline flex items-center gap-1.5"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <LogIn className="h-3.5 w-3.5" />
+                      Log In
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
