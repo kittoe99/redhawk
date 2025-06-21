@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Menu, X, MapPin, Phone, ChevronRight, Search, LogIn, UserPlus, CheckCircle, XCircle } from "lucide-react"
+import { Menu, X, MapPin, Phone, ChevronRight, Search, LogIn, UserPlus, CheckCircle, XCircle, ArrowRight, Star } from "lucide-react"
 import { Logo } from "@/components/logo"
 import { Inter, Montserrat } from "next/font/google"
 import { HawkIcon } from "@/components/quote-form/hawk-icon" // Declare the HawkIcon variable
@@ -317,75 +317,100 @@ export function MainNav() {
       {/* Mobile Menu - Enhanced */}
       {isMenuOpen && (
         <div
-          className="md:hidden fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300"
+          className="md:hidden fixed inset-0 z-50 bg-gradient-to-br from-black/70 via-black/60 to-black/70 backdrop-blur-lg transition-all duration-300 animate-in fade-in"
           onClick={() => setIsMenuOpen(false)}
         >
           <div
-            className="absolute top-0 right-0 h-full w-[90%] max-w-sm bg-gray-50 shadow-xl transform transition-transform duration-300 ease-in-out overflow-hidden"
+            className="absolute top-0 right-0 h-full w-[92%] max-w-sm bg-gradient-to-b from-white via-gray-50/95 to-white shadow-2xl transform transition-all duration-500 ease-out animate-in slide-in-from-right overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex flex-col h-full">
-              {/* Header with logo and close button */}
-              <div className="flex items-center justify-between p-4 border-b border-gray-100">
-                <Logo />
-                <button
-                  className="p-2 rounded-full text-gray-500 hover:bg-gray-100 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                  aria-label="Close menu"
-                >
-                  <X size={20} />
-                </button>
+            {/* Decorative background elements */}
+            <div className="absolute top-10 right-10 w-32 h-32 bg-primary-100/30 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-20 left-8 w-24 h-24 bg-blue-100/40 rounded-full blur-2xl"></div>
+            
+            <div className="flex flex-col h-full relative z-10">
+              {/* Enhanced Header */}
+              <div className="relative bg-gradient-to-r from-primary-600 via-primary-500 to-primary-600 p-5 shadow-lg">
+                {/* Decorative elements */}
+                <div className="absolute top-2 right-16 w-8 h-8 bg-white/20 rounded-full blur-lg"></div>
+                <div className="absolute bottom-2 left-12 w-6 h-6 bg-white/15 rounded-full blur-md"></div>
+                
+                <div className="relative flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
+                      <Logo />
+                    </div>
+                    <div>
+                      <p className="text-white font-bold text-lg">Redhawk</p>
+                      <p className="text-primary-100 text-xs">Moving Marketplace</p>
+                    </div>
+                  </div>
+                  <button
+                    className="p-3 rounded-xl text-white hover:bg-white/20 transition-all duration-200 hover:scale-110 backdrop-blur-sm"
+                    onClick={() => setIsMenuOpen(false)}
+                    aria-label="Close menu"
+                  >
+                    <X size={22} />
+                  </button>
+                </div>
               </div>
 
-              {/* Search bar */}
-              <div className="p-4 border-b border-gray-100">
-                <div className="relative flex items-center">
-                  <input
-                    type="text"
-                    placeholder="Enter ZIP code"
-                    value={zipCode}
-                    onChange={(e) => {
-                      const value = e.target.value
-                      if (value === "" || (/^\d+$/.test(value) && value.length <= 5)) {
-                        setZipCode(value)
-                        if (value.length === 5) {
-                          handleZipCodeSearch()
-                        } else {
-                          setSearchResult(null)
+              {/* Enhanced Search Section */}
+              <div className="p-5 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
+                <div className="relative">
+                  <div className="flex items-center bg-white rounded-2xl border-2 border-gray-200 focus-within:border-primary-300 focus-within:ring-2 focus-within:ring-primary-100 transition-all duration-200 shadow-sm">
+                    <input
+                      type="text"
+                      placeholder="Enter ZIP code"
+                      value={zipCode}
+                      onChange={(e) => {
+                        const value = e.target.value
+                        if (value === "" || (/^\d+$/.test(value) && value.length <= 5)) {
+                          setZipCode(value)
+                          if (value.length === 5) {
+                            handleZipCodeSearch()
+                          } else {
+                            setSearchResult(null)
+                          }
                         }
-                      }
-                    }}
-                    className="w-full pl-3 pr-16 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-800"
-                    maxLength={5}
-                  />
-                  <button
-                    onClick={handleZipCodeSearch}
-                    disabled={isSearching || zipCode.length !== 5}
-                    className="absolute right-0 h-full px-3 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-400 text-white rounded-r-lg transition-colors flex items-center justify-center"
-                  >
-                    {isSearching ? (
-                      <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    ) : (
-                      <Search className="h-4 w-4" />
-                    )}
-                  </button>
+                      }}
+                      className="flex-1 px-4 py-3 text-gray-800 placeholder-gray-500 bg-transparent rounded-l-2xl focus:outline-none text-base"
+                      maxLength={5}
+                    />
+                    <button
+                      onClick={handleZipCodeSearch}
+                      disabled={isSearching || zipCode.length !== 5}
+                      className="px-4 py-3 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-r-2xl transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl disabled:shadow-none"
+                    >
+                      {isSearching ? (
+                        <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      ) : (
+                        <Search className="h-5 w-5" />
+                      )}
+                    </button>
+                  </div>
                 </div>
 
                 {searchResult && (
                   <div
-                    className={`mt-3 p-3 rounded-lg border ${
+                    className={`mt-4 p-4 rounded-2xl border-2 transition-all duration-300 animate-in slide-in-from-top-2 ${
                       searchResult.available
-                        ? "bg-red-50 border-red-200 text-red-800"
-                        : "bg-red-50 border-red-200 text-red-800"
+                        ? "bg-emerald-50 border-emerald-200"
+                        : "bg-red-50 border-red-200"
                     }`}
                   >
-                    <div className="flex items-start">
-                      <div className={`p-1 rounded-full mr-2 ${searchResult.available ? "bg-red-100" : "bg-red-100"}`}>
-                        {searchResult.available ? <CheckCircle className="h-4 w-4" /> : <XCircle className="h-4 w-4" />}
+                    <div className="flex items-start space-x-3">
+                      <div className={`p-2 rounded-xl ${searchResult.available ? "bg-emerald-100" : "bg-red-100"}`}>
+                        {searchResult.available ? 
+                          <CheckCircle className="h-5 w-5 text-emerald-600" /> : 
+                          <XCircle className="h-5 w-5 text-red-600" />
+                        }
                       </div>
-                      <div>
-                        <p className="font-medium text-sm">{searchResult.city}</p>
-                        <p className="text-xs mt-0.5">
+                      <div className="flex-1">
+                        <p className={`font-bold text-sm ${searchResult.available ? "text-emerald-800" : "text-red-800"}`}>
+                          {searchResult.city}
+                        </p>
+                        <p className={`text-xs mt-1 ${searchResult.available ? "text-emerald-700" : "text-red-700"}`}>
                           {searchResult.message ||
                             (searchResult.available
                               ? "Service is available in this area!"
@@ -396,10 +421,11 @@ export function MainNav() {
                         {searchResult.available && (
                           <Link
                             href={`/service-type?zipcode=${zipCode}`}
-                            className="mt-2 inline-block text-xs font-medium bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+                            className="mt-3 inline-flex items-center gap-2 text-xs font-bold bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-4 py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5"
                             onClick={() => setIsMenuOpen(false)}
                           >
                             Get a Quote
+                            <ArrowRight className="w-3 h-3" />
                           </Link>
                         )}
                       </div>
@@ -408,86 +434,122 @@ export function MainNav() {
                 )}
               </div>
 
-              {/* Quick actions */}
-              <div className="relative p-5 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
-                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Quick Actions</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <Link
-                    href="/service-type"
-                    className="flex flex-col items-center justify-center bg-primary-600 hover:bg-primary-700 text-white p-3 rounded-lg transition-all duration-200 transform hover:-translate-y-1 shadow-md hover:shadow-lg"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <HawkIcon className="h-6 w-6 mb-1.5" />
-                    <span className="text-xs font-bold">GET QUOTE</span>
-                  </Link>
-                  <Link
-                    href="/track"
-                    className="flex flex-col items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-800 p-3 rounded-lg transition-all duration-200 transform hover:-translate-y-1 border border-gray-200 hover:border-gray-300"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <MapPin className="h-6 w-6 mb-1.5 text-primary-600" />
-                    <span className="text-xs font-bold">TRACK MOVE</span>
-                  </Link>
+              {/* Enhanced Quick Actions */}
+              <div className="relative p-5 bg-gradient-to-r from-gray-50 via-white to-gray-50 border-b border-gray-100">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary-50/30 to-blue-50/30"></div>
+                <div className="relative">
+                  <h3 className="text-xs font-bold text-gray-600 uppercase tracking-wider mb-4 flex items-center">
+                    <span className="w-2 h-2 bg-primary-500 rounded-full mr-2"></span>
+                    Quick Actions
+                  </h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <Link
+                      href="/service-type"
+                      className="group flex flex-col items-center justify-center bg-gradient-to-br from-primary-600 via-primary-500 to-primary-600 hover:from-primary-700 hover:via-primary-600 hover:to-primary-700 text-white p-4 rounded-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 shadow-lg hover:shadow-2xl border border-primary-700"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <div className="p-2 bg-white/20 rounded-xl mb-2 group-hover:bg-white/30 transition-all duration-200">
+                        <HawkIcon className="h-6 w-6" />
+                      </div>
+                      <span className="text-xs font-bold tracking-wide">GET QUOTE</span>
+                      <span className="text-xs text-primary-100 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-200">Start moving</span>
+                    </Link>
+                    <Link
+                      href="/track"
+                      className="group flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-gray-800 p-4 rounded-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 border-2 border-gray-200 hover:border-gray-300 shadow-lg hover:shadow-2xl"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <div className="p-2 bg-primary-100 rounded-xl mb-2 group-hover:bg-primary-200 transition-all duration-200">
+                        <MapPin className="h-6 w-6 text-primary-600" />
+                      </div>
+                      <span className="text-xs font-bold tracking-wide">TRACK MOVE</span>
+                      <span className="text-xs text-gray-600 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-200">Follow progress</span>
+                    </Link>
+                  </div>
                 </div>
-                <div className="absolute -left-1 top-0 bottom-0 w-1 bg-primary-600 rounded-r"></div>
               </div>
 
-              {/* Navigation Links */}
-              <nav className="flex-1 overflow-y-auto">
+              {/* Enhanced Navigation Links */}
+              <nav className="flex-1 overflow-y-auto bg-white">
                 <div className="py-2">
-                  {mainNavItems.map((item) => (
+                  {mainNavItems.map((item, index) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="flex items-center justify-between px-4 py-2.5 text-gray-800 hover:bg-gray-50 active:bg-gray-100 transition-colors"
+                      className="group flex items-center justify-between px-5 py-4 text-gray-800 hover:bg-gradient-to-r hover:from-primary-50 hover:to-blue-50 active:bg-primary-100 transition-all duration-200 border-l-4 border-l-transparent hover:border-l-primary-400"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <span className="flex items-center">
-                        <span className="p-2 rounded-full mr-3 text-primary-600">{item.icon}</span>
-                        <span className="font-medium text-gray-800">{item.label}</span>
+                        <div className="p-3 rounded-2xl mr-4 bg-gray-100 group-hover:bg-gradient-to-br group-hover:from-primary-500 group-hover:to-primary-600 transition-all duration-200 shadow-sm group-hover:shadow-lg">
+                          <span className="text-gray-600 group-hover:text-white transition-colors duration-200">
+                            {item.icon}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="font-bold text-gray-800 group-hover:text-primary-700 transition-colors duration-200">
+                            {item.label}
+                          </span>
+                          <p className="text-xs text-gray-500 group-hover:text-primary-600 transition-colors duration-200 mt-0.5">
+                            {item.href === '/services' ? 'View our services' : 'Find service areas'}
+                          </p>
+                        </div>
                       </span>
-                      <ChevronRight size={18} className="text-gray-400" />
+                      <ChevronRight size={18} className="text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-200" />
                     </Link>
                   ))}
                 </div>
-
-                {/* Account section */}
-                <div className="bg-gray-50 mt-2 py-4">
-                  <div className="px-4 mb-3">
-                    <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Account</h3>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 px-4">
-                    {" "}
-                    {/* Reduced gap from gap-3 to gap-2 */}
-                    {accountItems.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className="flex flex-col items-center justify-center p-2 rounded-lg bg-red-600 hover:bg-red-700 border border-red-700 hover:border-red-800 hover:shadow-sm transition-all text-white" // Reduced p-3 to p-2
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <span className="bg-red-500 p-1.5 rounded-full mb-1 text-white">
-                          {" "}
-                          {/* Reduced p-2 to p-1.5 and mb-2 to mb-1 */}
-                          {item.icon}
-                        </span>
-                        <span className="text-xs font-medium text-white">{item.label}</span>{" "}
-                        {/* Reduced text-sm to text-xs */}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
               </nav>
 
-              {/* Contact info footer */}
-              <div className="p-4 border-t border-gray-100 bg-gray-50">
-                <div className="flex items-center text-sm text-gray-600 mb-2">
-                  <Phone size={16} className="mr-2 text-primary-600" />
-                  <a href="tel:+18005551234" className="hover:text-primary-600 transition-colors text-gray-700">
-                    (800) 555-1234
-                  </a>
+              {/* Enhanced Account Section */}
+              <div className="bg-gradient-to-r from-gray-50 to-gray-100 py-5 border-t border-gray-200">
+                <div className="px-5 mb-4">
+                  <h3 className="text-xs font-bold text-gray-600 uppercase tracking-wider flex items-center">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                    Account
+                  </h3>
                 </div>
-                <p className="text-xs text-gray-500">Your trusted moving help marketplace</p>
+                <div className="grid grid-cols-2 gap-3 px-5">
+                  {accountItems.map((item, index) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="group flex flex-col items-center justify-center p-4 rounded-2xl bg-gradient-to-br from-primary-600 via-primary-500 to-primary-600 hover:from-primary-700 hover:via-primary-600 hover:to-primary-700 border border-primary-700 hover:border-primary-800 shadow-lg hover:shadow-2xl transition-all duration-300 text-white transform hover:-translate-y-1 hover:scale-105"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <div className="bg-white/20 p-2 rounded-xl mb-2 group-hover:bg-white/30 transition-all duration-200">
+                        {item.icon}
+                      </div>
+                      <span className="text-xs font-bold tracking-wide text-white">{item.label}</span>
+                      <span className="text-xs text-primary-100 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-200">
+                        {item.href === '/login' ? 'Access account' : 'Create account'}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Enhanced Contact Footer */}
+              <div className="p-5 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 text-white">
+                <div className="flex items-center text-sm mb-3">
+                  <div className="p-2 bg-white/20 rounded-xl mr-3">
+                    <Phone size={16} />
+                  </div>
+                  <div>
+                    <a href="tel:+18005551234" className="font-bold hover:text-primary-300 transition-colors">
+                      (800) 555-1234
+                    </a>
+                    <p className="text-xs text-gray-300">24/7 Support Available</p>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <p className="text-xs text-gray-400">Your trusted moving marketplace</p>
+                  <div className="flex items-center space-x-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
+                    ))}
+                    <span className="text-xs text-gray-300 ml-1">4.9</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
