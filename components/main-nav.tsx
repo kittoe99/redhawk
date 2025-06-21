@@ -413,56 +413,27 @@ export function MainNav() {
                 )}
               </div>
 
-              {/* Account Section */}
-              <div className="p-4 border-t bg-gray-50">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="p-2 rounded-lg bg-primary-100 text-primary-600">
-                    <UserPlus className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-medium text-gray-900">Create an account</h3>
-                    <p className="text-xs text-gray-500">Save your moves and track progress</p>
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <Link
-                    href="/register"
-                    className="py-2 text-center text-sm font-medium text-primary-600 hover:text-primary-700"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Sign Up
-                  </Link>
-                  <Link
-                    href="/login"
-                    className="py-2 text-center text-sm font-medium text-gray-700 hover:text-gray-900"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Log In
-                  </Link>
-                </div>
-              </div>
-
               {/* Quick Actions */}
               <div className="p-4 border-b">
                 <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">Quick Actions</h3>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="flex gap-3">
                   <Link
                     href="/service-type"
-                    className="flex flex-col items-center p-3 rounded-lg border hover:border-primary-300 hover:bg-primary-50 transition-colors"
+                    className="flex items-center gap-2 p-2 rounded-lg border hover:border-primary-300 hover:bg-primary-50 transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <div className="p-1.5 bg-primary-50 rounded-lg mb-2">
-                      <MapPin className="h-5 w-5 text-primary-600" />
+                    <div className="p-1.5 bg-primary-50 rounded-lg">
+                      <MapPin className="h-4 w-4 text-primary-600" />
                     </div>
                     <span className="text-sm font-medium text-gray-800">Get Quote</span>
                   </Link>
                   <Link
                     href="/track"
-                    className="flex flex-col items-center p-3 rounded-lg border hover:border-gray-300 hover:bg-gray-50 transition-colors"
+                    className="flex items-center gap-2 p-2 rounded-lg border hover:border-gray-300 hover:bg-gray-50 transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <div className="p-1.5 bg-gray-100 rounded-lg mb-2">
-                      <MapPin className="h-5 w-5 text-gray-600" />
+                    <div className="p-1.5 bg-gray-100 rounded-lg">
+                      <MapPin className="h-4 w-4 text-gray-600" />
                     </div>
                     <span className="text-sm font-medium text-gray-800">Track Move</span>
                   </Link>
@@ -493,34 +464,6 @@ export function MainNav() {
                 </div>
               </nav>
 
-              {/* Enhanced Account Section */}
-              <div className="bg-gradient-to-r from-gray-50 to-gray-100 py-5 border-t border-gray-200">
-                <div className="px-5 mb-4">
-                  <h3 className="text-xs font-bold text-gray-600 uppercase tracking-wider flex items-center">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                    Account
-                  </h3>
-                </div>
-                <div className="grid grid-cols-2 gap-3 px-5">
-                  {accountItems.map((item, index) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="group flex flex-col items-center justify-center p-4 rounded-2xl bg-gradient-to-br from-primary-600 via-primary-500 to-primary-600 hover:from-primary-700 hover:via-primary-600 hover:to-primary-700 border border-primary-700 hover:border-primary-800 shadow-lg hover:shadow-2xl transition-all duration-300 text-white transform hover:-translate-y-1 hover:scale-105"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      <div className="bg-white/20 p-2 rounded-xl mb-2 group-hover:bg-white/30 transition-all duration-200">
-                        {item.icon}
-                      </div>
-                      <span className="text-xs font-bold tracking-wide text-white">{item.label}</span>
-                      <span className="text-xs text-primary-100 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-200">
-                        {item.href === '/login' ? 'Access account' : 'Create account'}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
               {/* Enhanced Contact Footer */}
               <div className="p-5 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 text-white">
                 <div className="flex items-center text-sm mb-3">
@@ -542,6 +485,34 @@ export function MainNav() {
                     ))}
                     <span className="text-xs text-gray-300 ml-1">4.9</span>
                   </div>
+                </div>
+              </div>
+
+              {/* Create Account Section */}
+              <div className="bg-gradient-to-r from-gray-50 to-gray-100 py-5 border-t border-gray-200">
+                <div className="px-5 mb-4">
+                  <h3 className="text-xs font-bold text-gray-600 uppercase tracking-wider flex items-center">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                    Create Account
+                  </h3>
+                </div>
+                <div className="grid grid-cols-2 gap-3 px-5">
+                  {accountItems.map((item, index) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="group flex flex-col items-center justify-center p-4 rounded-2xl bg-gradient-to-br from-primary-600 via-primary-500 to-primary-600 hover:from-primary-700 hover:via-primary-600 hover:to-primary-700 border border-primary-700 hover:border-primary-800 shadow-lg hover:shadow-2xl transition-all duration-300 text-white transform hover:-translate-y-1 hover:scale-105"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <div className="bg-white/20 p-2 rounded-xl mb-2 group-hover:bg-white/30 transition-all duration-200">
+                        {item.icon}
+                      </div>
+                      <span className="text-xs font-bold tracking-wide text-white">{item.label}</span>
+                      <span className="text-xs text-primary-100 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-200">
+                        {item.href === '/login' ? 'Access account' : 'Create account'}
+                      </span>
+                    </Link>
+                  ))}
                 </div>
               </div>
             </div>
