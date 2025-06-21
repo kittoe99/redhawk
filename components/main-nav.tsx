@@ -1,7 +1,7 @@
 "use client"
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import Link from "next/link"
-import { Menu, X, MapPin, Phone, ChevronRight, Search, LogIn, UserPlus, CheckCircle, XCircle, ArrowRight } from "lucide-react"
+import { Menu, X, MapPin, Phone, ChevronRight, Search, LogIn, UserPlus, CheckCircle, XCircle, ArrowRight, Star } from "lucide-react"
 import { Inter, Montserrat } from "next/font/google"
 import { Logo } from "./logo"
 import { HawkIcon } from "@/components/quote-form/hawk-icon" // Declare the HawkIcon variable
@@ -122,8 +122,8 @@ export function MainNav() {
         }
 
         // Check if the state is in our service areas
-        const stateAbbr = place["state abbreviation"]
-        const isInServiceState = serviceAreas[stateAbbr] !== undefined
+        const stateAbbr = place["state abbreviation"] as string
+        const isInServiceState = serviceAreas[stateAbbr as keyof typeof serviceAreas] !== undefined
 
         // If in a service state, consider it available
         const isServiceable = isInServiceState
