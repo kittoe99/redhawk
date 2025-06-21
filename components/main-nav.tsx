@@ -1,9 +1,9 @@
 "use client"
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Menu, X, MapPin, Phone, ChevronRight, Search, LogIn, UserPlus, CheckCircle, XCircle, ArrowRight, Star } from "lucide-react"
-import { Logo } from "@/components/logo"
+import { Menu, X, MapPin, Phone, ChevronRight, Search, LogIn, UserPlus, CheckCircle, XCircle, ArrowRight } from "lucide-react"
 import { Inter, Montserrat } from "next/font/google"
+import { Logo } from "./logo"
 import { HawkIcon } from "@/components/quote-form/hawk-icon" // Declare the HawkIcon variable
 
 import Image from "next/image" // Keep this import for the Image component
@@ -314,51 +314,35 @@ export function MainNav() {
         </div>
       </div>
 
-      {/* Mobile Menu - Enhanced */}
+      {/* Mobile Menu - Simplified */}
       {isMenuOpen && (
         <div
-          className="md:hidden fixed inset-0 z-50 bg-gradient-to-br from-black/70 via-black/60 to-black/70 backdrop-blur-lg transition-all duration-300 animate-in fade-in"
+          className="md:hidden fixed inset-0 z-50 bg-gray-900/50 backdrop-blur-sm"
           onClick={() => setIsMenuOpen(false)}
         >
           <div
-            className="absolute top-0 right-0 h-full w-[92%] max-w-sm bg-gradient-to-b from-white via-gray-50/95 to-white shadow-2xl transform transition-all duration-500 ease-out animate-in slide-in-from-right overflow-hidden"
+            className="absolute top-0 right-0 h-full w-4/5 max-w-xs bg-white shadow-lg overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Decorative background elements */}
-            <div className="absolute top-10 right-10 w-32 h-32 bg-primary-100/30 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-20 left-8 w-24 h-24 bg-blue-100/40 rounded-full blur-2xl"></div>
-            
-            <div className="flex flex-col h-full relative z-10">
-              {/* Enhanced Header */}
-              <div className="relative bg-gradient-to-r from-primary-600 via-primary-500 to-primary-600 p-5 shadow-lg">
-                {/* Decorative elements */}
-                <div className="absolute top-2 right-16 w-8 h-8 bg-white/20 rounded-full blur-lg"></div>
-                <div className="absolute bottom-2 left-12 w-6 h-6 bg-white/15 rounded-full blur-md"></div>
-                
-                <div className="relative flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
-                      <Logo />
-                    </div>
-                    <div>
-                      <p className="text-white font-bold text-lg">Redhawk</p>
-                      <p className="text-primary-100 text-xs">Moving Marketplace</p>
-                    </div>
-                  </div>
+            <div className="flex flex-col h-full">
+              {/* Header */}
+              <div className="sticky top-0 bg-white border-b p-4 z-10">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg font-semibold text-gray-900">Menu</h2>
                   <button
-                    className="p-3 rounded-xl text-white hover:bg-white/20 transition-all duration-200 hover:scale-110 backdrop-blur-sm"
+                    className="p-1 rounded-full hover:bg-gray-100 text-gray-500"
                     onClick={() => setIsMenuOpen(false)}
                     aria-label="Close menu"
                   >
-                    <X size={22} />
+                    <X className="w-5 h-5" />
                   </button>
                 </div>
               </div>
 
-              {/* Enhanced Search Section */}
-              <div className="p-5 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
+              {/* Search Section */}
+              <div className="p-4 border-b">
                 <div className="relative">
-                  <div className="flex items-center bg-white rounded-2xl border-2 border-gray-200 focus-within:border-primary-300 focus-within:ring-2 focus-within:ring-primary-100 transition-all duration-200 shadow-sm">
+                  <div className="flex items-center border rounded-lg focus-within:ring-1 focus-within:ring-primary-500 focus-within:border-primary-500">
                     <input
                       type="text"
                       placeholder="Enter ZIP code"
@@ -374,18 +358,18 @@ export function MainNav() {
                           }
                         }
                       }}
-                      className="flex-1 px-4 py-3 text-gray-800 placeholder-gray-500 bg-transparent rounded-l-2xl focus:outline-none text-base"
+                      className="flex-1 px-3 py-2 text-gray-800 placeholder-gray-400 bg-transparent focus:outline-none text-sm"
                       maxLength={5}
                     />
                     <button
                       onClick={handleZipCodeSearch}
                       disabled={isSearching || zipCode.length !== 5}
-                      className="px-4 py-3 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-r-2xl transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl disabled:shadow-none"
+                      className="px-3 py-2 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-300 text-white rounded-r-[5px] flex items-center justify-center"
                     >
                       {isSearching ? (
-                        <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                       ) : (
-                        <Search className="h-5 w-5" />
+                        <Search className="h-4 w-4" />
                       )}
                     </button>
                   </div>
@@ -393,24 +377,19 @@ export function MainNav() {
 
                 {searchResult && (
                   <div
-                    className={`mt-4 p-4 rounded-2xl border-2 transition-all duration-300 animate-in slide-in-from-top-2 ${
-                      searchResult.available
-                        ? "bg-emerald-50 border-emerald-200"
-                        : "bg-red-50 border-red-200"
+                    className={`mt-3 p-3 text-sm rounded-lg ${
+                      searchResult.available ? 'bg-emerald-50 text-emerald-800' : 'bg-red-50 text-red-800'
                     }`}
                   >
-                    <div className="flex items-start space-x-3">
-                      <div className={`p-2 rounded-xl ${searchResult.available ? "bg-emerald-100" : "bg-red-100"}`}>
-                        {searchResult.available ? 
-                          <CheckCircle className="h-5 w-5 text-emerald-600" /> : 
-                          <XCircle className="h-5 w-5 text-red-600" />
-                        }
-                      </div>
-                      <div className="flex-1">
-                        <p className={`font-bold text-sm ${searchResult.available ? "text-emerald-800" : "text-red-800"}`}>
-                          {searchResult.city}
-                        </p>
-                        <p className={`text-xs mt-1 ${searchResult.available ? "text-emerald-700" : "text-red-700"}`}>
+                    <div className="flex items-start gap-3">
+                      {searchResult.available ? (
+                        <CheckCircle className="h-5 w-5 mt-0.5 flex-shrink-0 text-emerald-600" />
+                      ) : (
+                        <XCircle className="h-5 w-5 mt-0.5 flex-shrink-0 text-red-600" />
+                      )}
+                      <div>
+                        <p className="font-medium">{searchResult.city}</p>
+                        <p className="text-sm mt-1">
                           {searchResult.message ||
                             (searchResult.available
                               ? "Service is available in this area!"
@@ -421,11 +400,11 @@ export function MainNav() {
                         {searchResult.available && (
                           <Link
                             href={`/service-type?zipcode=${zipCode}`}
-                            className="mt-3 inline-flex items-center gap-2 text-xs font-bold bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-4 py-2 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5"
+                            className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-primary-600 hover:text-primary-800"
                             onClick={() => setIsMenuOpen(false)}
                           >
                             Get a Quote
-                            <ArrowRight className="w-3 h-3" />
+                            <ArrowRight className="w-3.5 h-3.5" />
                           </Link>
                         )}
                       </div>
@@ -434,67 +413,81 @@ export function MainNav() {
                 )}
               </div>
 
-              {/* Enhanced Quick Actions */}
-              <div className="relative p-5 bg-gradient-to-r from-gray-50 via-white to-gray-50 border-b border-gray-100">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary-50/30 to-blue-50/30"></div>
-                <div className="relative">
-                  <h3 className="text-xs font-bold text-gray-600 uppercase tracking-wider mb-4 flex items-center">
-                    <span className="w-2 h-2 bg-primary-500 rounded-full mr-2"></span>
-                    Quick Actions
-                  </h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    <Link
-                      href="/service-type"
-                      className="group flex flex-col items-center justify-center bg-gradient-to-br from-primary-600 via-primary-500 to-primary-600 hover:from-primary-700 hover:via-primary-600 hover:to-primary-700 text-white p-4 rounded-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 shadow-lg hover:shadow-2xl border border-primary-700"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      <div className="p-2 bg-white/20 rounded-xl mb-2 group-hover:bg-white/30 transition-all duration-200">
-                        <HawkIcon className="h-6 w-6" />
-                      </div>
-                      <span className="text-xs font-bold tracking-wide">GET QUOTE</span>
-                      <span className="text-xs text-primary-100 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-200">Start moving</span>
-                    </Link>
-                    <Link
-                      href="/track"
-                      className="group flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-gray-800 p-4 rounded-2xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 border-2 border-gray-200 hover:border-gray-300 shadow-lg hover:shadow-2xl"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      <div className="p-2 bg-primary-100 rounded-xl mb-2 group-hover:bg-primary-200 transition-all duration-200">
-                        <MapPin className="h-6 w-6 text-primary-600" />
-                      </div>
-                      <span className="text-xs font-bold tracking-wide">TRACK MOVE</span>
-                      <span className="text-xs text-gray-600 mt-1 opacity-0 group-hover:opacity-100 transition-all duration-200">Follow progress</span>
-                    </Link>
+              {/* Account Section */}
+              <div className="p-4 border-t bg-gray-50">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2 rounded-lg bg-primary-100 text-primary-600">
+                    <UserPlus className="h-5 w-5" />
                   </div>
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-900">Create an account</h3>
+                    <p className="text-xs text-gray-500">Save your moves and track progress</p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <Link
+                    href="/register"
+                    className="py-2 text-center text-sm font-medium text-primary-600 hover:text-primary-700"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Sign Up
+                  </Link>
+                  <Link
+                    href="/login"
+                    className="py-2 text-center text-sm font-medium text-gray-700 hover:text-gray-900"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Log In
+                  </Link>
                 </div>
               </div>
 
-              {/* Enhanced Navigation Links */}
-              <nav className="flex-1 overflow-y-auto bg-white">
-                <div className="py-2">
-                  {mainNavItems.map((item, index) => (
+              {/* Quick Actions */}
+              <div className="p-4 border-b">
+                <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">Quick Actions</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  <Link
+                    href="/service-type"
+                    className="flex flex-col items-center p-3 rounded-lg border hover:border-primary-300 hover:bg-primary-50 transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <div className="p-1.5 bg-primary-50 rounded-lg mb-2">
+                      <MapPin className="h-5 w-5 text-primary-600" />
+                    </div>
+                    <span className="text-sm font-medium text-gray-800">Get Quote</span>
+                  </Link>
+                  <Link
+                    href="/track"
+                    className="flex flex-col items-center p-3 rounded-lg border hover:border-gray-300 hover:bg-gray-50 transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <div className="p-1.5 bg-gray-100 rounded-lg mb-2">
+                      <MapPin className="h-5 w-5 text-gray-600" />
+                    </div>
+                    <span className="text-sm font-medium text-gray-800">Track Move</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Navigation Links */}
+              <nav className="flex-1 overflow-y-auto">
+                <div className="py-1">
+                  {mainNavItems.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="group flex items-center justify-between px-5 py-4 text-gray-800 hover:bg-gradient-to-r hover:from-primary-50 hover:to-blue-50 active:bg-primary-100 transition-all duration-200 border-l-4 border-l-transparent hover:border-l-primary-400"
+                      className="flex items-center justify-between px-5 py-3 text-gray-700 hover:bg-gray-50"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <span className="flex items-center">
-                        <div className="p-3 rounded-2xl mr-4 bg-gray-100 group-hover:bg-gradient-to-br group-hover:from-primary-500 group-hover:to-primary-600 transition-all duration-200 shadow-sm group-hover:shadow-lg">
-                          <span className="text-gray-600 group-hover:text-white transition-colors duration-200">
-                            {item.icon}
-                          </span>
+                        <div className="p-1.5 rounded-lg mr-3 bg-gray-100">
+                          {React.cloneElement(item.icon, { className: 'h-5 w-5 text-gray-600' })}
                         </div>
-                        <div>
-                          <span className="font-bold text-gray-800 group-hover:text-primary-700 transition-colors duration-200">
-                            {item.label}
-                          </span>
-                          <p className="text-xs text-gray-500 group-hover:text-primary-600 transition-colors duration-200 mt-0.5">
-                            {item.href === '/services' ? 'View our services' : 'Find service areas'}
-                          </p>
-                        </div>
+                        <span className="font-medium text-gray-900">
+                          {item.label}
+                        </span>
                       </span>
-                      <ChevronRight size={18} className="text-gray-400 group-hover:text-primary-500 group-hover:translate-x-1 transition-all duration-200" />
+                      <ChevronRight className="h-4 w-4 text-gray-400" />
                     </Link>
                   ))}
                 </div>
