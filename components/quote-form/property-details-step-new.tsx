@@ -4,6 +4,7 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { useQuoteWizard } from "@/contexts/quote-wizard-context"
+import { Home, Building, Check, AlertCircle, Move3D } from "lucide-react"
 
 const PropertyDetailsStep: React.FC = () => {
   const { formData, updateFormData, goToNextStep, goToPreviousStep } = useQuoteWizard()
@@ -75,206 +76,191 @@ const PropertyDetailsStep: React.FC = () => {
     goToNextStep()
   }
 
+  const propertyOptions = [
+    {
+      id: "studio",
+      icon: Home,
+      title: "Studio",
+      description: "Up to 650 sq ft",
+      bgColor: "from-blue-50 to-blue-100",
+      borderColor: "border-blue-200",
+      selectedBg: "from-blue-100 to-blue-200",
+      selectedBorder: "border-blue-500",
+      iconColor: "text-blue-600"
+    },
+    {
+      id: "1_bedroom",
+      icon: Home,
+      title: "1 Bedroom",
+      description: "Up to 850 sq ft",
+      bgColor: "from-green-50 to-green-100",
+      borderColor: "border-green-200",
+      selectedBg: "from-green-100 to-green-200",
+      selectedBorder: "border-green-500",
+      iconColor: "text-green-600"
+    },
+    {
+      id: "2_bedroom",
+      icon: Building,
+      title: "2 Bedroom",
+      description: "Up to 1,200 sq ft",
+      bgColor: "from-purple-50 to-purple-100",
+      borderColor: "border-purple-200",
+      selectedBg: "from-purple-100 to-purple-200",
+      selectedBorder: "border-purple-500",
+      iconColor: "text-purple-600"
+    },
+    {
+      id: "3plus_bedroom",
+      icon: Building,
+      title: "3+ Bedroom",
+      description: "1,200+ sq ft",
+      bgColor: "from-orange-50 to-orange-100",
+      borderColor: "border-orange-200",
+      selectedBg: "from-orange-100 to-orange-200",
+      selectedBorder: "border-orange-500",
+      iconColor: "text-orange-600"
+    }
+  ]
+
   return (
-    <div className="space-y-8">
-      <div className="space-y-3">
-        <h3 className="text-2xl font-bold text-gray-900">How big is your place?</h3>
-        <p className="text-gray-600">Help us estimate the time and resources needed for your move</p>
+    <div className="max-w-2xl mx-auto space-y-8">
+      {/* Enhanced Header */}
+      <div className="text-center">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full mb-4 shadow-lg">
+          <Home className="w-8 h-8 text-white" />
+        </div>
+        <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-3">
+          How big is your place?
+        </h3>
+        <p className="text-gray-600 text-base md:text-lg leading-relaxed">
+          Help us estimate the time and resources needed for your move
+        </p>
       </div>
 
-      {/* Property Size Selection - Always visible */}
+      {/* Property Size Selection */}
       <div className="space-y-4 animate-in fade-in duration-500">
-        <div className="grid grid-cols-1 gap-4">
-          {/* Studio Option */}
-          <div
-            className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
-              formData.propertySize === "studio"
-                ? "border-primary-600 bg-primary-50 shadow-md"
-                : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
-            }`}
-            onClick={() => handlePropertySizeSelect("studio")}
-          >
-            <div className="flex items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {propertyOptions.map((option) => {
+            const IconComponent = option.icon
+            const isSelected = formData.propertySize === option.id
+            
+            return (
               <div
-                className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mr-3 ${
-                  formData.propertySize === "studio" ? "border-primary-600 bg-primary-600" : "border-gray-400"
+                key={option.id}
+                className={`group relative p-6 border-2 rounded-2xl cursor-pointer transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg ${
+                  isSelected
+                    ? `bg-gradient-to-br ${option.selectedBg} ${option.selectedBorder} shadow-lg ring-2 ring-offset-2 ring-primary-500/20`
+                    : `bg-gradient-to-br ${option.bgColor} ${option.borderColor} hover:shadow-md`
                 }`}
+                onClick={() => handlePropertySizeSelect(option.id as any)}
               >
-                {formData.propertySize === "studio" && <div className="w-2 h-2 rounded-full bg-white"></div>}
+                {/* Selection indicator */}
+                {isSelected && (
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-primary-500 rounded-full flex items-center justify-center shadow-lg">
+                    <Check className="w-3 h-3 text-white" />
+                  </div>
+                )}
+                
+                <div className="flex items-center space-x-4">
+                  <div className={`p-3 rounded-xl ${isSelected ? 'bg-white/50' : 'bg-white/80'} backdrop-blur-sm shadow-sm`}>
+                    <IconComponent className={`w-6 h-6 ${option.iconColor}`} />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-gray-900 text-lg">{option.title}</h4>
+                    <p className="text-sm text-gray-600 font-medium">{option.description}</p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h4 className="font-semibold text-gray-900">Studio</h4>
-                <p className="text-sm text-gray-600">up to 650 sq ft</p>
-              </div>
-            </div>
-          </div>
-
-          {/* 1 Bedroom Option */}
-          <div
-            className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
-              formData.propertySize === "1_bedroom"
-                ? "border-primary-600 bg-primary-50 shadow-md"
-                : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
-            }`}
-            onClick={() => handlePropertySizeSelect("1_bedroom")}
-          >
-            <div className="flex items-center">
-              <div
-                className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mr-3 ${
-                  formData.propertySize === "1_bedroom" ? "border-primary-600 bg-primary-600" : "border-gray-400"
-                }`}
-              >
-                {formData.propertySize === "1_bedroom" && <div className="w-2 h-2 rounded-full bg-white"></div>}
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-900">1 Bedroom</h4>
-                <p className="text-sm text-gray-600">up to 850 sq ft</p>
-              </div>
-            </div>
-          </div>
-
-          {/* 2 Bedroom Option */}
-          <div
-            className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
-              formData.propertySize === "2_bedroom"
-                ? "border-primary-600 bg-primary-50 shadow-md"
-                : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
-            }`}
-            onClick={() => handlePropertySizeSelect("2_bedroom")}
-          >
-            <div className="flex items-center">
-              <div
-                className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mr-3 ${
-                  formData.propertySize === "2_bedroom" ? "border-primary-600 bg-primary-600" : "border-gray-400"
-                }`}
-              >
-                {formData.propertySize === "2_bedroom" && <div className="w-2 h-2 rounded-full bg-white"></div>}
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-900">2 Bedroom</h4>
-                <p className="text-sm text-gray-600">up to 1300 sq ft</p>
-              </div>
-            </div>
-          </div>
-
-          {/* 3+ Bedroom Option */}
-          <div
-            className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
-              formData.propertySize === "3plus_bedroom"
-                ? "border-primary-600 bg-primary-50 shadow-md"
-                : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
-            }`}
-            onClick={() => handlePropertySizeSelect("3plus_bedroom")}
-          >
-            <div className="flex items-center">
-              <div
-                className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mr-3 ${
-                  formData.propertySize === "3plus_bedroom" ? "border-primary-600 bg-primary-600" : "border-gray-400"
-                }`}
-              >
-                {formData.propertySize === "3plus_bedroom" && <div className="w-2 h-2 rounded-full bg-white"></div>}
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-900">3+ bedroom or house</h4>
-                <p className="text-sm text-gray-600">Pay per item</p>
-              </div>
-            </div>
-          </div>
+            )
+          })}
         </div>
       </div>
 
-      {/* Stairs Question - Show after property size is selected */}
+      {/* Stairs Question */}
       {showStairsQuestion && (
-        <div className="space-y-4 animate-in slide-in-from-bottom-4 duration-500" data-question="stairs">
-          <h3 className="text-lg font-semibold text-gray-900">Does your move involve stairs?</h3>
-          <p className="text-sm text-gray-600">Having stairs adds approximately 1 hour to the estimated moving time.</p>
-          <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500" data-question="stairs">
+          <div className="text-center">
+            <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-full mb-3 shadow-md">
+              <Move3D className="w-6 h-6 text-white" />
+            </div>
+            <h4 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
+              Are there stairs involved?
+            </h4>
+            <p className="text-gray-600">This affects pricing and the equipment we'll bring</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Yes Option */}
             <div
-              className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
+              className={`group p-6 border-2 rounded-2xl cursor-pointer transition-all duration-300 transform hover:scale-[1.02] ${
                 formData.hasStairs === true
-                  ? "border-primary-600 bg-primary-50 shadow-md"
-                  : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                  ? "bg-gradient-to-br from-red-50 to-red-100 border-red-300 shadow-lg ring-2 ring-offset-2 ring-red-500/20"
+                  : "bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200 hover:border-gray-300 hover:shadow-md"
               }`}
               onClick={() => handleStairsToggle(true)}
             >
-              <div className="flex items-center justify-center">
-                <div
-                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mr-2 ${
-                    formData.hasStairs === true ? "border-primary-600 bg-primary-600" : "border-gray-400"
-                  }`}
-                >
-                  {formData.hasStairs === true && <div className="w-2 h-2 rounded-full bg-white"></div>}
+              {formData.hasStairs === true && (
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center shadow-lg">
+                  <Check className="w-3 h-3 text-white" />
                 </div>
-                <span className="font-medium text-gray-900">Yes</span>
+              )}
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-white/80 rounded-xl mb-3 shadow-sm">
+                  <Move3D className="w-6 h-6 text-red-600" />
+                </div>
+                <h5 className="font-bold text-gray-900 text-lg mb-1">Yes, there are stairs</h5>
+                <p className="text-sm text-gray-600">May require additional time and equipment</p>
               </div>
             </div>
 
             {/* No Option */}
             <div
-              className={`p-4 border-2 rounded-lg cursor-pointer transition-all duration-200 ${
+              className={`group p-6 border-2 rounded-2xl cursor-pointer transition-all duration-300 transform hover:scale-[1.02] ${
                 formData.hasStairs === false
-                  ? "border-primary-600 bg-primary-50 shadow-md"
-                  : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                  ? "bg-gradient-to-br from-green-50 to-green-100 border-green-300 shadow-lg ring-2 ring-offset-2 ring-green-500/20"
+                  : "bg-gradient-to-br from-gray-50 to-gray-100 border-gray-200 hover:border-gray-300 hover:shadow-md"
               }`}
               onClick={() => handleStairsToggle(false)}
             >
-              <div className="flex items-center justify-center">
-                <div
-                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center mr-2 ${
-                    formData.hasStairs === false ? "border-primary-600 bg-primary-600" : "border-gray-400"
-                  }`}
-                >
-                  {formData.hasStairs === false && <div className="w-2 h-2 rounded-full bg-white"></div>}
+              {formData.hasStairs === false && (
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
+                  <Check className="w-3 h-3 text-white" />
                 </div>
-                <span className="font-medium text-gray-900">No</span>
+              )}
+              <div className="text-center">
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-white/80 rounded-xl mb-3 shadow-sm">
+                  <Home className="w-6 h-6 text-green-600" />
+                </div>
+                <h5 className="font-bold text-gray-900 text-lg mb-1">No stairs</h5>
+                <p className="text-sm text-gray-600">Ground level or elevator access only</p>
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* Additional Info - Show with stairs question */}
-      {showStairsQuestion && (
-        <div className="text-sm text-gray-600 space-y-2 animate-in fade-in duration-500 delay-300">
-          <p>Exercise equipment, appliances, and moves further than 20 miles will add additional fees.</p>
-          <p>
-            Helpers are unable to move these items: pianos, organs, gun safes, jukeboxes, kegs, alcohol, and pool
-            tables.
-          </p>
+      {/* Error Message */}
+      {error && (
+        <div className="p-4 bg-red-50 border border-red-200 rounded-xl animate-in fade-in duration-300">
+          <div className="flex items-center space-x-2">
+            <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+            <p className="text-sm text-red-700 font-medium">{error}</p>
+          </div>
         </div>
       )}
 
-      {error && (
-        <p className="text-sm text-red-600 flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-            <path
-              fillRule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-              clipRule="evenodd"
-            />
-          </svg>
-          {error}
-        </p>
-      )}
-
-      {/* Navigation Buttons - Show when both questions are answered */}
+      {/* Continue Button */}
       {showContinueButton && (
-        <div className="flex space-x-4 animate-in slide-in-from-bottom-4 duration-500" data-question="continue-button">
+        <div className="animate-in slide-in-from-bottom-4 duration-500" data-question="continue-button">
           <Button
-            type="button"
-            variant="outline"
-            onClick={goToPreviousStep}
-            className="flex-1 py-6 text-base border-2 hover:bg-gray-50 transition-all duration-200"
-          >
-            Back
-          </Button>
-          <Button
-            type="button"
             onClick={handleContinue}
-            className="flex-1 bg-gradient-to-r from-primary-700 to-primary-600 hover:from-primary-800 hover:to-primary-700 text-white py-6 text-lg font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
+            className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white rounded-xl transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
           >
-            Continue
+            <div className="flex items-center justify-center space-x-2">
+              <Check className="w-5 h-5" />
+              <span>Continue to Next Step</span>
+            </div>
           </Button>
         </div>
       )}
