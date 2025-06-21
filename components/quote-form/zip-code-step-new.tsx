@@ -17,12 +17,66 @@ const styles = `
   }
 `
 
+// Service areas by state/region
+const serviceAreas = {
+  colorado: ["Denver", "Colorado Springs", "Boulder", "Fort Collins", "Aurora", "Lakewood", "Thornton", "Arvada"],
+  california: ["Los Angeles", "San Francisco", "San Diego", "Sacramento", "Oakland", "San Jose", "Fresno", "Long Beach"],
+  texas: ["Houston", "Dallas", "Austin", "San Antonio", "Fort Worth", "El Paso", "Arlington", "Corpus Christi"],
+  florida: ["Miami", "Orlando", "Tampa", "Jacksonville", "Fort Lauderdale", "St. Petersburg", "Hialeah", "Tallahassee"],
+  newyork: ["New York City", "Buffalo", "Rochester", "Yonkers", "Syracuse", "Albany", "New Rochelle", "Cheektowaga"],
+  illinois: ["Chicago", "Aurora", "Rockford", "Joliet", "Naperville", "Springfield", "Peoria", "Elgin"],
+  pennsylvania: ["Philadelphia", "Pittsburgh", "Allentown", "Erie", "Reading", "Scranton", "Bethlehem", "Lancaster"],
+  ohio: ["Columbus", "Cleveland", "Cincinnati", "Toledo", "Akron", "Dayton", "Parma", "Canton"],
+  georgia: ["Atlanta", "Augusta", "Columbus", "Macon", "Savannah", "Athens", "Sandy Springs", "Roswell"],
+  michigan: ["Detroit", "Grand Rapids", "Warren", "Sterling Heights", "Lansing", "Ann Arbor", "Flint", "Dearborn"],
+  default: ["Denver", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego"]
+}
+
 const ZipCodeStep: React.FC = () => {
   const { formData, updateFormData, goToNextStep } = useQuoteWizard()
   const [error, setError] = useState<string>("")
   const [locationInfo, setLocationInfo] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [showContinueButton, setShowContinueButton] = useState(false)
+  const [userLocation, setUserLocation] = useState<{state: string, city: string} | null>(null)
+  const [relevantCities, setRelevantCities] = useState<string[]>(serviceAreas.default)
+  const [isLoadingLocation, setIsLoadingLocation] = useState(true)
+
+  // Fetch user's location based on IP
+  useEffect(() => {
+    const fetchUserLocation = async () => {
+      try {
+        setIsLoadingLocation(true)
+        // Using ipapi.co - free tier allows 1000 requests per day
+        const response = await fetch('https://ipapi.co/json/')
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch location')
+        }
+        
+        const data = await response.json()
+        
+        if (data.region && data.city) {
+          const state = data.region.toLowerCase().replace(/\s+/g, '')
+          const city = data.city
+          
+          setUserLocation({ state, city })
+          
+          // Get relevant cities based on user's state
+          const stateCities = serviceAreas[state as keyof typeof serviceAreas] || serviceAreas.default
+          setRelevantCities(stateCities)
+        }
+      } catch (error) {
+        console.error('Error fetching user location:', error)
+        // Fallback to default cities
+        setRelevantCities(serviceAreas.default)
+      } finally {
+        setIsLoadingLocation(false)
+      }
+    }
+
+    fetchUserLocation()
+  }, [])
 
   const lookupZipCode = async (zip: string) => {
     try {
@@ -217,16 +271,42 @@ const ZipCodeStep: React.FC = () => {
         )}
       </form>
 
-      {/* Service Area Showcase */}
+      {/* Service Area Showcase - Now with IP-based location detection */}
       <div className="mt-10 text-center">
-        <p className="text-sm text-gray-600 mb-4 font-medium">We serve major cities nationwide</p>
+        {isLoadingLocation ? (
+          <div className="flex items-center justify-center space-x-2 mb-4">
+            <Loader2 className="w-4 h-4 animate-spin text-gray-500" />
+            <p className="text-sm text-gray-600 font-medium">Detecting your location...</p>
+          </div>
+        ) : (
+          <div className="mb-4">
+            {userLocation ? (
+              <p className="text-sm text-gray-600 font-medium">
+                We serve cities near you in {userLocation.state.charAt(0).toUpperCase() + userLocation.state.slice(1)}
+              </p>
+            ) : (
+              <p className="text-sm text-gray-600 font-medium">We serve major cities nationwide</p>
+            )}
+          </div>
+        )}
+        
         <div className="flex flex-wrap justify-center gap-2">
-          {["Denver", "Colorado Springs", "Boulder", "Fort Collins", "Aurora", "Lakewood", "Thornton", "Arvada"].map((city) => (
-            <span key={city} className="px-3 py-1.5 bg-primary-50 text-primary-700 text-xs font-medium rounded-full border border-primary-200">
+          {relevantCities.map((city) => (
+            <span 
+              key={city} 
+              className="px-3 py-1.5 bg-primary-50 text-primary-700 text-xs font-medium rounded-full border border-primary-200 hover:bg-primary-100 transition-colors duration-200"
+            >
               {city}
             </span>
           ))}
         </div>
+        
+        {userLocation && (
+          <div className="mt-3 text-xs text-gray-500">
+            <MapPin className="w-3 h-3 inline mr-1" />
+            Detected location: {userLocation.city}
+          </div>
+        )}
       </div>
     </div>
   )
