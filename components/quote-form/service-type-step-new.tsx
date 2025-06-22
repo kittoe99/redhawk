@@ -290,7 +290,7 @@ const ServiceTypeStep: React.FC = () => {
       {/* Navigation Buttons - Show only when all questions are answered */}
       {showContinueButton && (
         <div
-          className="flex flex-col md:flex-row justify-between gap-4 pt-6 animate-in slide-in-from-bottom-4 duration-500"
+          className="flex gap-4 pt-6 animate-in slide-in-from-bottom-4 duration-500"
           data-question="continue-button"
         >
           <Button

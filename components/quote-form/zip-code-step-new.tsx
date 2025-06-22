@@ -33,7 +33,7 @@ const serviceAreas = {
 }
 
 const ZipCodeStep: React.FC = () => {
-  const { formData, updateFormData, goToNextStep } = useQuoteWizard()
+  const { formData, updateFormData, goToNextStep, goToPreviousStep } = useQuoteWizard()
   const [error, setError] = useState<string>("")
   const [locationInfo, setLocationInfo] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -256,11 +256,19 @@ const ZipCodeStep: React.FC = () => {
             )}
           </Button>
         ) : (
-          <div className="animate-in slide-in-from-bottom-4 duration-500" data-question="continue-button">
+          <div className="flex gap-4 animate-in slide-in-from-bottom-4 duration-500" data-question="continue-button">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={goToPreviousStep}
+              className="w-full h-14 text-lg font-semibold border-gray-300 text-gray-700 hover:bg-gray-50"
+            >
+              Back
+            </Button>
             <Button
               type="button"
               onClick={handleContinue}
-              className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-xl transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
+              className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-xl transition-all duration-200"
             >
               <div className="flex items-center justify-center space-x-2">
                 <CheckCircle className="w-5 h-5" />
