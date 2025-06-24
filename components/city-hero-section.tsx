@@ -104,7 +104,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
                       asChild
                     >
                       <Link href="/quote">
-                        Get {cityData.name} Quote
+                        Pricing
                         <ArrowRight className="h-4 w-4" />
                       </Link>
                     </Button>
