@@ -205,46 +205,45 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
       </section>
 
       {/* SERVICE AREAS SECTION */}
-      <section className="py-20 bg-white">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 md:text-4xl mb-4">
-              Service Areas
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-5xl">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-3">
+              Our Service Areas
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              We connect you with verified moving helpers in these major metropolitan areas.
+            <div className="w-16 h-1 bg-primary-600 mx-auto mb-4"></div>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              We connect you with verified moving helpers in these major metropolitan areas
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
             {serviceAreas.map((area) => (
               <div
                 key={`${area.city}-${area.state}`}
-                className="group rounded-xl border border-gray-200 bg-white p-6 text-center shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1"
+                className="bg-white border border-gray-100 rounded-lg p-4 text-center hover:border-primary-200 hover:bg-gray-50 transition-colors"
               >
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary-100">
-                  <svg className="h-6 w-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary-50 text-primary-600 mb-3">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900">{area.city}</h3>
-                <p className="text-sm text-gray-500">{area.state}</p>
+                <h3 className="font-medium text-gray-900">{area.city}</h3>
+                <p className="text-xs text-gray-500">{area.state}</p>
                 <p className="text-xs text-gray-400 mt-1">{area.population} metro</p>
               </div>
             ))}
           </div>
 
-          <div className="text-center mt-12">
-            <p className="text-gray-600 mb-6">Don't see your city? We're expanding rapidly.</p>
+          <div className="text-center mt-12 pt-6 border-t border-gray-100">
+            <p className="text-gray-500 text-sm mb-4">Don't see your city? We're expanding rapidly.</p>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 rounded-full border border-primary-600 px-6 py-3 text-primary-600 font-medium transition-colors hover:bg-primary-600 hover:text-white"
+              className="inline-flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-700 font-medium transition-colors"
             >
-              Request Your City
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              Request your city
+              <ArrowRight className="h-3.5 w-3.5 mt-0.5" />
             </Link>
           </div>
         </div>

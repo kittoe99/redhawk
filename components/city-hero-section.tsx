@@ -41,7 +41,7 @@ export function CityHeroSection({ cityData }: CityHeroSectionProps) {
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl mt-8 md:mt-12 lg:mt-16">
         <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
           {/* Left Column - Text Content */}
-          <div className="relative z-10">
+          <div className="relative z-10 overflow-hidden">
             <div className="absolute -top-10 -left-10 w-40 h-40 bg-primary-50 rounded-full opacity-20 blur-xl"></div>
 
             <div className="inline-flex items-center gap-1 sm:gap-2 px-3 py-1 sm:px-4 sm:py-2 mb-4 sm:mb-6 rounded-full bg-primary-600 text-white font-medium text-xs sm:text-sm border-[1px] border-primary-700 shadow-sm">
@@ -64,7 +64,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
               </svg>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-900 mb-4 sm:mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-900 mb-4 sm:mb-6 leading-tight break-words">
               {cityData.name} Moving Help From{" "}
               <span className="text-primary-600 relative">
                 $69/Hour
@@ -232,7 +232,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
             </p>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 max-w-6xl mx-auto px-2 sm:px-4">
             {/* Apartment Moves */}
             <Link href="/quote" className="block">
               <div className="group bg-white rounded-xl sm:rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
@@ -354,7 +354,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
           </div>
 
           {/* Service Cities Grid */}
-          <div className="flex flex-wrap justify-center gap-2 max-w-5xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-2 max-w-5xl mx-auto px-2 sm:px-4">
             {/* Main City */}
             <div className="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-full border border-primary-700 shadow-sm font-medium text-sm">
               <MapPin className="h-3 w-3 text-white mr-1.5" />

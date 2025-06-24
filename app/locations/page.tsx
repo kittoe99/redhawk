@@ -1,3 +1,4 @@
+import React from "react"
 import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
@@ -381,48 +382,47 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
       </section>
 
       {/* CITIES GRID SECTION */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 md:text-4xl mb-4">
-              Service Areas
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-5xl">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-3">
+              Our Service Areas
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Click on any city to learn more about local moving help options and pricing.
+            <div className="w-16 h-1 bg-primary-600 mx-auto mb-4"></div>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Select a city to explore local moving help options
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
             {cities.map((city) => (
-              <Link key={city.slug} href={`/locations/${city.slug}`} className="group">
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 h-full transition-all duration-300 hover:shadow-lg hover:border-primary-200 hover:-translate-y-1">
-                  <div
-                    className={`${city.color} rounded-full w-14 h-14 flex items-center justify-center mb-4 text-gray-700 group-hover:scale-110 transition-transform duration-300`}
-                  >
-                    {city.icon}
+              <Link 
+                key={city.slug} 
+                href={`/locations/${city.slug}`} 
+                className="group flex flex-col h-full"
+              >
+                <div className="bg-white border border-gray-100 rounded-lg p-4 h-full flex flex-col items-center text-center hover:border-primary-200 hover:bg-gray-50 transition-colors">
+                  <div className={`${city.color} rounded-full w-10 h-10 flex items-center justify-center text-gray-700 mb-3`}>
+                    {React.cloneElement(city.icon, { className: 'w-5 h-5' })}
                   </div>
-                  <h3 className="font-semibold text-lg text-gray-900 group-hover:text-primary-600 transition-colors mb-1">
+                  <h3 className="font-medium text-gray-900 group-hover:text-primary-600 mb-1">
                     {city.name}
                   </h3>
-                  <p className="text-sm text-gray-500 mb-2">{city.state} • {city.population} metro</p>
-                  <p className="text-xs text-gray-600 mb-4 leading-relaxed">{city.description}</p>
-                  <div className="flex items-center text-primary-600 text-sm font-medium group-hover:text-primary-700">
-                    View Details
-                    <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform duration-300" />
-                  </div>
+                  <p className="text-xs text-gray-500 mb-2">{city.state}</p>
+                  <p className="text-xs text-gray-400 mt-auto">{city.population} metro</p>
                 </div>
               </Link>
             ))}
           </div>
 
-          <div className="text-center mt-16">
-            <p className="text-gray-600 mb-6">Don't see your city? We're expanding rapidly.</p>
+          <div className="text-center mt-12 pt-6 border-t border-gray-100">
+            <p className="text-gray-500 text-sm mb-4">Don't see your city? We're expanding rapidly.</p>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 rounded-full border border-primary-600 px-6 py-3 text-primary-600 font-medium transition-colors hover:bg-primary-600 hover:text-white"
+              className="inline-flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-700 font-medium transition-colors"
             >
-              Request Your City
-              <ArrowRight className="h-4 w-4" />
+              Request your city
+              <ArrowRight className="h-3.5 w-3.5 mt-0.5" />
             </Link>
           </div>
         </div>

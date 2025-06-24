@@ -168,23 +168,23 @@ const ZipCodeStep: React.FC = () => {
         </p>
       </div>
 
-      {/* Trust Indicators */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-        <div className="text-center p-3 bg-green-50 rounded-xl border border-green-100">
-          <Shield className="w-5 h-5 text-green-600 mx-auto mb-1" />
-          <p className="text-xs text-green-700 font-medium">Free Quote</p>
+      {/* Trust Indicators - Minimal */}
+      <div className="flex flex-wrap justify-center gap-4 mb-8 text-sm text-gray-600">
+        <div className="flex items-center">
+          <Shield className="w-4 h-4 text-green-500 mr-1.5" />
+          <span>Free Quote</span>
         </div>
-        <div className="text-center p-3 bg-blue-50 rounded-xl border border-blue-100">
-          <CheckCircle className="w-5 h-5 text-blue-600 mx-auto mb-1" />
-          <p className="text-xs text-blue-700 font-medium">Secure & Private</p>
+        <div className="flex items-center">
+          <CheckCircle className="w-4 h-4 text-blue-500 mr-1.5" />
+          <span>Secure</span>
         </div>
-        <div className="text-center p-3 bg-yellow-50 rounded-xl border border-yellow-100">
-          <Award className="w-5 h-5 text-yellow-600 mx-auto mb-1" />
-          <p className="text-xs text-yellow-700 font-medium">5-Star Rated</p>
+        <div className="flex items-center">
+          <Award className="w-4 h-4 text-yellow-500 mr-1.5" />
+          <span>5★ Rated</span>
         </div>
-        <div className="text-center p-3 bg-purple-50 rounded-xl border border-purple-100">
-          <Clock className="w-5 h-5 text-purple-600 mx-auto mb-1" />
-          <p className="text-xs text-purple-700 font-medium">Quick Response</p>
+        <div className="flex items-center">
+          <Clock className="w-4 h-4 text-purple-500 mr-1.5" />
+          <span>Quick Response</span>
         </div>
       </div>
 
