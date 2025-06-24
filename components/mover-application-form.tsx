@@ -31,17 +31,33 @@ const vehicleTypes = [
 ]
 
 export function MoverApplicationForm() {
-  const [formData, setFormData] = useState({
+  interface FormData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    serviceArea: string;
+    helperType: 'with_vehicle' | 'without_vehicle';
+    vehicleType: string;
+    vehicleYear: string;
+    vehicleMake: string;
+    vehicleModel: string;
+    isTeam: boolean;
+    additionalInfo: string;
+  }
+
+  const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
     serviceArea: "",
+    helperType: "with_vehicle",
     vehicleType: "",
     vehicleYear: "",
     vehicleMake: "",
     vehicleModel: "",
-    // Removed experience and availability from state
+    isTeam: false,
     additionalInfo: "",
   })
 
@@ -174,30 +190,66 @@ export function MoverApplicationForm() {
           </div>
         </div>
 
-        {/* Vehicle Information */}
+        {/* Helper Type */}
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Vehicle Information</h3>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="vehicleType" className="block text-sm font-medium text-gray-700 mb-1">
-                Vehicle Type *
-              </label>
-              <select
-                id="vehicleType"
-                name="vehicleType"
-                required
-                value={formData.vehicleType}
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Helper Type</h3>
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3">
+              <input
+                type="radio"
+                id="with_vehicle"
+                name="helperType"
+                value="with_vehicle"
+                checked={formData.helperType === 'with_vehicle'}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-              >
-                <option value="">Select vehicle type</option>
-                {vehicleTypes.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
+                className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+              />
+              <label htmlFor="with_vehicle" className="block text-sm font-medium text-gray-700">
+                I have a vehicle (Cargo Van or Box Truck)
+              </label>
             </div>
+            <div className="flex items-center space-x-3">
+              <input
+                type="radio"
+                id="without_vehicle"
+                name="helperType"
+                value="without_vehicle"
+                checked={formData.helperType === 'without_vehicle'}
+                onChange={handleInputChange}
+                className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+              />
+              <label htmlFor="without_vehicle" className="block text-sm font-medium text-gray-700">
+                I want to work as a helper (no vehicle)
+              </label>
+            </div>
+          </div>
+        </div>
+
+        {/* Vehicle Information - Conditionally rendered */}
+        {formData.helperType === 'with_vehicle' && (
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-gray-900">Vehicle Information</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="vehicleType" className="block text-sm font-medium text-gray-700 mb-1">
+                  Vehicle Type *
+                </label>
+                <select
+                  id="vehicleType"
+                  name="vehicleType"
+                  required
+                  value={formData.vehicleType}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                >
+                  <option value="">Select vehicle type</option>
+                  {vehicleTypes.filter(type => type !== 'No Vehicle - Helper Only').map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
             <div>
               <label htmlFor="vehicleYear" className="block text-sm font-medium text-gray-700 mb-1">
                 Vehicle Year *
@@ -247,6 +299,28 @@ export function MoverApplicationForm() {
                 placeholder="e.g., Transit, Express, Sprinter"
               />
             </div>
+            </div>
+          </div>
+        )}
+
+        {/* Spacer */}
+        <div className="h-px bg-gray-200 my-6"></div>
+
+        {/* Team Application */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-gray-900">Team Application</h3>
+          <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
+            <input
+              type="checkbox"
+              id="isTeam"
+              name="isTeam"
+              checked={formData.isTeam}
+              onChange={(e) => setFormData(prev => ({ ...prev, isTeam: e.target.checked }))}
+              className="h-5 w-5 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+            />
+            <label htmlFor="isTeam" className="block text-sm font-medium text-gray-700">
+              I'm applying as part of a two-person team
+            </label>
           </div>
         </div>
 

@@ -3,10 +3,10 @@
 import type React from "react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Truck, Users, Check } from "lucide-react"
+import { Truck, Users, Check, Shield, Clock, Star, BadgeCheck } from "lucide-react"
 import type { QuoteFormData } from "./quote-form"
 import { HawkIcon } from "./hawk-icon"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 
 interface ServiceTypeStepProps {
   serviceType: string
@@ -71,96 +71,179 @@ export function ServiceTypeStep({
   }
 
   return (
-    <motion.form
-      onSubmit={handleSubmit}
-      className="space-y-8"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      <motion.div className="space-y-3" variants={itemVariants}>
-        <h3 className="text-2xl font-bold text-gray-900">Select Your Service</h3>
-        <p className="text-gray-600">Choose the type of service you need</p>
-      </motion.div>
+    <div className="relative">
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-white -z-10" />
+      <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-gradient-to-bl from-primary-100 to-transparent rounded-full filter blur-3xl opacity-30 -z-10" />
+      
+      <motion.form
+        onSubmit={handleSubmit}
+        className="relative space-y-8 bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-gray-100"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div className="space-y-3 text-center mb-8" variants={itemVariants}>
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary-50 to-primary-100 mb-4 mx-auto">
+            <Truck className="h-8 w-8 text-primary-600" />
+          </div>
+          <h3 className="text-3xl font-bold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-400">
+            Choose Your Service
+          </h3>
+          <p className="text-gray-600 max-w-lg mx-auto">
+            Select the perfect moving solution for your needs. We offer flexible options to match every move.
+          </p>
+        </motion.div>
+        
+        {/* Trust Badges */}
+        <motion.div 
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
+          variants={itemVariants}
+        >
+          {[
+            { icon: Shield, text: 'Fully Insured' },
+            { icon: Clock, text: 'On-Time Guarantee' },
+            { icon: Star, text: '5-Star Rated' },
+            { icon: BadgeCheck, text: 'Background Checked' },
+          ].map((item, i) => (
+            <motion.div 
+              key={i} 
+              className="flex items-center justify-center space-x-2 p-3 bg-white rounded-lg shadow-sm border border-gray-100"
+              whileHover={{ y: -2, boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)' }}
+              transition={{ duration: 0.2 }}
+            >
+              <item.icon className="h-5 w-5 text-primary-500" />
+              <span className="text-sm font-medium text-gray-700">{item.text}</span>
+            </motion.div>
+          ))}
+        </motion.div>
 
       {/* Service Type Selection */}
-      <motion.div className="space-y-4" variants={itemVariants}>
-        <label className="text-sm font-medium text-gray-700">Service Type</label>
-        <div className="grid grid-cols-1 gap-4">
+      <motion.div className="space-y-6" variants={itemVariants}>
+        <div className="space-y-2">
+          <label className="block text-sm font-semibold text-gray-700 uppercase tracking-wider">Service Type</label>
+          <p className="text-sm text-gray-500">Choose the service that best fits your moving needs</p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <motion.button
             type="button"
-            className={`flex items-center p-5 border-2 rounded-xl transition-all duration-300 ${
+            className={`relative flex flex-col p-6 border-2 rounded-2xl transition-all duration-300 overflow-hidden h-full ${
               selectedService === "movers-truck"
-                ? "border-primary-600 bg-primary-50 shadow-lg"
-                : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                ? "border-primary-500 bg-gradient-to-br from-primary-50 to-white shadow-lg ring-2 ring-primary-100 ring-opacity-50"
+                : "border-gray-200 hover:border-primary-300 hover:bg-gray-50"
             }`}
             onClick={() => {
               setSelectedService("movers-truck")
               setError("")
             }}
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ y: -4, boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)' }}
             whileTap={{ scale: 0.98 }}
           >
-            <div
-              className={`p-4 rounded-full mr-4 transition-all duration-300 ${
-                selectedService === "movers-truck" ? "bg-primary-100" : "bg-gray-100"
-              }`}
-            >
-              <Truck
-                className={`h-7 w-7 transition-colors duration-300 ${selectedService === "movers-truck" ? "text-primary-600" : "text-gray-500"}`}
-              />
-            </div>
-            <div className="flex-1 text-left">
-              <div className="font-medium text-lg">Movers + Truck</div>
-              <div className="text-sm text-gray-500">Full-service moving with our truck</div>
-            </div>
             {selectedService === "movers-truck" && (
-              <div className="text-primary-600">
-                <motion.div
-                  animate={{ rotate: [0, 15, 0, -15, 0] }}
-                  transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2 }}
-                >
-                  <HawkIcon width={28} height={28} />
-                </motion.div>
+              <div className="absolute top-4 right-4 bg-primary-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                SELECTED
               </div>
+            )}
+            
+            <div className="flex items-start">
+              <div
+                className={`p-3 rounded-xl mr-4 transition-all duration-300 ${
+                  selectedService === "movers-truck" 
+                    ? "bg-primary-100 text-primary-600" 
+                    : "bg-gray-100 text-gray-500"
+                }`}
+              >
+                <Truck className="h-6 w-6" />
+              </div>
+              <div className="flex-1 text-left">
+                <div className="font-bold text-xl text-gray-900 mb-1">Full Service Move</div>
+                <p className="text-gray-600">Professional movers with a truck for a complete moving solution</p>
+              </div>
+            </div>
+            
+            <div className="mt-6 pt-6 border-t border-gray-100">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white p-3 rounded-lg border border-gray-100">
+                  <div className="text-xs text-gray-500 mb-1">Starting at</div>
+                  <div className="text-lg font-bold text-primary-600">$119<small className="text-sm text-gray-500">/hour</small></div>
+                </div>
+                <div className="bg-white p-3 rounded-lg border border-gray-100">
+                  <div className="text-xs text-gray-500 mb-1">Best for</div>
+                  <div className="text-sm font-medium text-gray-900">1-3 Bedrooms</div>
+                </div>
+              </div>
+            </div>
+            
+            {selectedService === "movers-truck" && (
+              <motion.div 
+                className="absolute -bottom-4 -right-4 text-primary-100"
+                animate={{ rotate: [0, 15, 0, -15, 0] }}
+                transition={{ repeat: Number.POSITIVE_INFINITY, duration: 3 }}
+              >
+                <HawkIcon width={80} height={80} />
+              </motion.div>
             )}
           </motion.button>
 
           <motion.button
             type="button"
-            className={`flex items-center p-5 border-2 rounded-xl transition-all duration-300 ${
+            className={`relative flex flex-col p-6 border-2 rounded-2xl transition-all duration-300 overflow-hidden h-full ${
               selectedService === "labor-only"
-                ? "border-primary-600 bg-primary-50 shadow-lg"
-                : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                ? "border-blue-500 bg-gradient-to-br from-blue-50 to-white shadow-lg ring-2 ring-blue-100 ring-opacity-50"
+                : "border-gray-200 hover:border-blue-300 hover:bg-gray-50"
             }`}
             onClick={() => {
               setSelectedService("labor-only")
               setSelectedMovers(2) // Default to 2 movers for labor-only
               setError("")
             }}
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ y: -4, boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)' }}
             whileTap={{ scale: 0.98 }}
           >
-            <div
-              className={`p-4 rounded-full mr-4 transition-all duration-300 ${selectedService === "labor-only" ? "bg-primary-100" : "bg-gray-100"}`}
-            >
-              <Users
-                className={`h-7 w-7 transition-colors duration-300 ${selectedService === "labor-only" ? "text-primary-600" : "text-gray-500"}`}
-              />
-            </div>
-            <div className="flex-1 text-left">
-              <div className="font-medium text-lg">Labor Only</div>
-              <div className="text-sm text-gray-500">Just the movers, no truck</div>
-            </div>
             {selectedService === "labor-only" && (
-              <div className="text-primary-600">
-                <motion.div
-                  animate={{ rotate: [0, 15, 0, -15, 0] }}
-                  transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2 }}
-                >
-                  <HawkIcon width={28} height={28} />
-                </motion.div>
+              <div className="absolute top-4 right-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                SELECTED
               </div>
+            )}
+            
+            <div className="flex items-start">
+              <div
+                className={`p-3 rounded-xl mr-4 transition-all duration-300 ${
+                  selectedService === "labor-only" 
+                    ? "bg-blue-100 text-blue-600" 
+                    : "bg-gray-100 text-gray-500"
+                }`}
+              >
+                <Users className="h-6 w-6" />
+              </div>
+              <div className="flex-1 text-left">
+                <div className="font-bold text-xl text-gray-900 mb-1">Labor Only</div>
+                <p className="text-gray-600">Professional movers to help with loading/unloading your own truck</p>
+              </div>
+            </div>
+            
+            <div className="mt-6 pt-6 border-t border-gray-100">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white p-3 rounded-lg border border-gray-100">
+                  <div className="text-xs text-gray-500 mb-1">Starting at</div>
+                  <div className="text-lg font-bold text-blue-600">$69<small className="text-sm text-gray-500">/hour</small></div>
+                </div>
+                <div className="bg-white p-3 rounded-lg border border-gray-100">
+                  <div className="text-xs text-gray-500 mb-1">Best for</div>
+                  <div className="text-sm font-medium text-gray-900">DIY Moves</div>
+                </div>
+              </div>
+            </div>
+            
+            {selectedService === "labor-only" && (
+              <motion.div 
+                className="absolute -bottom-4 -right-4 text-blue-100"
+                animate={{ rotate: [0, 15, 0, -15, 0] }}
+                transition={{ repeat: Number.POSITIVE_INFINITY, duration: 3 }}
+              >
+                <HawkIcon width={80} height={80} />
+              </motion.div>
             )}
           </motion.button>
         </div>
@@ -449,6 +532,28 @@ export function ServiceTypeStep({
           </svg>
         </Button>
       </motion.div>
+      
+
+      
+      {error && (
+        <motion.div 
+          className="mt-4 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-md"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+        >
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-red-700">{error}</p>
+            </div>
+          </div>
+        </motion.div>
+      )}
     </motion.form>
+  </div>
   )
 }
