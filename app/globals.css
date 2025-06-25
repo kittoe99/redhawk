@@ -30,6 +30,13 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+/* Mobile-specific fix for junk-estimator page */
+@media (max-width: 768px) {
+  .min-h-screen {
+    background-color: #ffffff !important;
+  }
+}
+
 /* Custom border styles for the site */
 @layer components {
   .border-strong {
