@@ -26,8 +26,36 @@ html {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: #ffffff;
+  background: #ffffff !important;
   -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure all sections have white background by default */
+section {
+  background-color: #ffffff !important;
+}
+
+/* Override any background patterns or gradients */
+.bg-pattern-primary-dots,
+.bg-gradient-to-b,
+.bg-gradient-to-t,
+.bg-gradient-to-r,
+.bg-gradient-to-l {
+  background: #ffffff !important;
+}
+
+/* Override any background colors that might be set by Tailwind */
+.bg-gray-50,
+.bg-gray-100,
+.bg-gray-200,
+.bg-gray-300,
+.bg-gray-400,
+.bg-gray-500,
+.bg-gray-600,
+.bg-gray-700,
+.bg-gray-800,
+.bg-gray-900 {
+  background-color: #ffffff !important;
 }
 
 /* Custom border styles for the site */

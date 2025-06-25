@@ -85,7 +85,7 @@ export function HeroSection() {
   ]
 
   return (
-    <section className="relative pt-16 pb-0 md:pt-24 md:pb-0 bg-pattern-primary-dots w-full">
+    <section className="relative pt-16 pb-0 md:pt-24 md:pb-0 bg-white w-full">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl mt-8 md:mt-12 lg:mt-16">
         <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
           {/* Left Column - Text Content */}
@@ -381,7 +381,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
       </section>
 
       {/* Service Areas Section - Simplified with No Images */}
-      <section className="pt-12 pb-16 bg-gradient-to-b from-white to-[#FFF7F7]">
+      <section className="pt-12 pb-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-6">
             <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-2">Service Areas</h2>
