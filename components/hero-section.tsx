@@ -273,7 +273,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 max-w-6xl mx-auto">
             {/* Apartment Moves */}
-            <Link href="/quote" className="block">
+            <Link href="/apartment-moves" className="block">
               <div className="group bg-white rounded-xl sm:rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
                 <div className="relative h-32 sm:h-40 md:h-48">
                   <Image
@@ -298,7 +298,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
             </Link>
 
             {/* Large Moves */}
-            <Link href="/quote" className="block">
+            <Link href="/large-moves" className="block">
               <div className="group bg-white rounded-xl sm:rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
                 <div className="relative h-32 sm:h-40 md:h-48">
                   <Image
@@ -321,7 +321,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
             </Link>
 
             {/* Labor Only */}
-            <Link href="/quote" className="block">
+            <Link href="/labor-only" className="block">
               <div className="group bg-white rounded-xl sm:rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
                 <div className="relative h-32 sm:h-40 md:h-48">
                   <Image
@@ -344,7 +344,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
             </Link>
 
             {/* Junk Removal */}
-            <Link href="/junk-removal-quote" className="block">
+            <Link href="/junk-removal" className="block">
               <div className="group bg-white rounded-xl sm:rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
                 <div className="relative h-32 sm:h-40 md:h-48">
                   <Image

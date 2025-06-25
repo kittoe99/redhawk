@@ -24,7 +24,7 @@ export function ServiceTypeSelection() {
 
             <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:gap-8 max-w-4xl mx-auto">
               {/* Moving Services */}
-              <Link href="/quote" className="block">
+              <Link href="/apartment-moves" className="block">
                 <div className="group bg-white rounded-lg sm:rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
                   <div className="relative h-28 sm:h-40 md:h-48 overflow-hidden">
                     <img
@@ -46,7 +46,7 @@ export function ServiceTypeSelection() {
               </Link>
 
               {/* Junk Removal */}
-              <Link href="/junk-estimator" className="block">
+              <Link href="/junk-removal" className="block">
                 <div className="group bg-white rounded-lg sm:rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
                   <div className="relative h-28 sm:h-40 md:h-48 overflow-hidden">
                     <img
