@@ -13,14 +13,7 @@ export default function QuotePage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-primary-400/20 to-primary-600/20 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-primary-500/20 to-primary-700/20 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-primary-300/10 to-primary-500/10 rounded-full blur-3xl"></div>
-      </div>
-
+    <div className="min-h-screen bg-gray-50">
       <Script id="quote-schema" type="application/ld+json">
         {`
           {
@@ -39,12 +32,10 @@ export default function QuotePage() {
 
       <MainNav />
 
-      <main className="pt-16 relative z-10">
-        <div className="container mx-auto px-3 md:px-4 py-4 md:py-8 max-w-4xl">
-          <QuoteWizardProvider>
-            <QuoteWizardContainer />
-          </QuoteWizardProvider>
-        </div>
+      <main className="pt-16">
+        <QuoteWizardProvider>
+          <QuoteWizardContainer />
+        </QuoteWizardProvider>
       </main>
 
       <HawkFooter />

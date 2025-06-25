@@ -96,58 +96,25 @@ const QuoteWizardContainer: React.FC = () => {
   const progressPercentage = (currentStepIndex / (totalSteps - 1)) * 100
 
   return (
-    <div ref={formRef} className="w-full max-w-3xl mx-auto bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
-      {/* Header with hawk icon and progress bar */}
-      <div className="bg-gradient-to-r from-primary-700 via-primary-600 to-primary-500 p-4 md:p-6 text-white relative overflow-hidden">
-        {/* Animated background patterns */}
-        <div
-          className="absolute inset-0 overflow-hidden opacity-10"
-          style={{
-            backgroundImage: "url(/backgrounds/cartoon-movers-bg.png)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          }}
-        ></div>
-
-        <div className="absolute top-0 right-0 w-20 md:w-32 h-20 md:h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-16 md:w-24 h-16 md:h-24 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
-
-        <div className="flex items-center justify-between relative z-10">
-          <div>
-            <h1 className="text-xl md:text-3xl font-bold flex flex-col md:flex-row md:items-center text-white">
-              <span className="bg-gradient-to-r from-white via-white to-primary-100 bg-clip-text text-transparent">Moving Quote</span>
-              <span className="text-xs md:text-sm bg-white/20 px-3 py-1.5 rounded-full mt-2 md:mt-0 md:ml-3 text-white w-fit border border-white/30 backdrop-blur-sm">
-                Step {currentStepIndex + 1} of {totalSteps}
-              </span>
-            </h1>
-            <p className="text-primary-100 text-sm md:text-base mt-2 font-medium">Fast, free estimate in minutes</p>
-          </div>
-          <div className="bg-white/15 p-2 md:p-3 rounded-full shadow-lg transform transition-all duration-300 hover:scale-110 hover:bg-white/20 backdrop-blur-sm border border-white/30">
-            <HawkIcon width={24} height={24} fill="#ffffff" className="md:w-10 md:h-10" />
+    <div ref={formRef} className="min-h-screen bg-gray-50">
+      {/* Progress indicator */}
+      {currentStep !== "zip_code" && (
+        <div className="bg-white border-b border-gray-200 py-4 mb-6">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-center space-x-2 text-sm text-gray-600">
+              <span className="text-primary-600 font-medium">Step {currentStepIndex + 1} of {totalSteps}</span>
+              <span>•</span>
+              <span>Moving Quote</span>
+              <span>•</span>
+              <span>{Math.round(progressPercentage)}% Complete</span>
+            </div>
           </div>
         </div>
+      )}
 
-        {/* Progress bar */}
-        <div className="mt-4 md:mt-6 relative">
-          <div className="flex justify-between text-xs text-primary-100 mb-2">
-            <span>Progress</span>
-            <span>{Math.round(progressPercentage)}% Complete</span>
-          </div>
-          <div className="h-2 bg-white/20 rounded-full overflow-hidden backdrop-blur-sm border border-white/30">
-            <div
-              className="h-full bg-gradient-to-r from-white to-primary-100 rounded-full transition-all duration-700 ease-out shadow-sm"
-              style={{ width: `${progressPercentage}%` }}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Form steps */}
-      <div className="p-4 md:p-8 lg:p-10 bg-white/90 backdrop-blur-sm">
-        <div className="min-h-[400px] md:min-h-[500px] flex flex-col">
-          <div className="space-y-8">{renderStep()}</div>
-        </div>
+      {/* Step content */}
+      <div className="container mx-auto px-4 py-8 max-w-2xl">
+        {renderStep()}
       </div>
     </div>
   )

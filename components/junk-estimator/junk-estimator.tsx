@@ -132,7 +132,7 @@ function ZipCodeStep({
             value={zipCode}
             onChange={(e) => onZipCodeChange(e.target.value)}
             placeholder="Enter your ZIP code"
-            className="w-full px-4 py-3 text-lg border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition-all duration-200 text-center font-medium"
+            className="w-full px-4 py-3 text-lg border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition-all duration-200 text-center font-medium text-gray-900 placeholder-gray-500"
             maxLength={10}
           />
           {zipCode && (
