@@ -30,50 +30,46 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Mobile-specific fix for junk-estimator page */
+/* Mobile-specific styles */
 @media (max-width: 768px) {
-  .min-h-screen {
+  /* Force white background on all pages */
+  html, body, #root, #__next,
+  .min-h-screen, .bg-white, .bg-gray-50,
+  .bg-gray-100, .bg-gray-200 {
     background-color: #ffffff !important;
-  }
-  
-  /* Fix gray backgrounds on mobile */
-  .bg-gray-50 {
-    background-color: #ffffff !important;
-    border: 1px solid #e5e7eb !important;
   }
   
   /* Ensure text visibility on mobile */
   .text-gray-500 {
-    color: #6b7280 !important;
+    color: #4b5563 !important; /* Darker gray for better contrast */
   }
   
   .text-gray-600 {
-    color: #4b5563 !important;
-  }
-  
-  .text-gray-700 {
     color: #374151 !important;
   }
   
-  .text-gray-800 {
+  .text-gray-700 {
     color: #1f2937 !important;
   }
   
-  .text-gray-900 {
+  .text-gray-800, .text-gray-900 {
     color: #111827 !important;
   }
   
   /* Input and placeholder text */
-  input.placeholder-gray-500::placeholder {
+  input::placeholder, .placeholder-gray-500::placeholder {
     color: #6b7280 !important;
   }
   
-  /* Ensure headings are dark enough */
-  h1, h2, h3, h4, h5, h6 {
+  /* Ensure all text is visible */
+  h1, h2, h3, h4, h5, h6, p, span, div {
     color: #111827 !important;
   }
   
-  /* Text size fixes for better visibility */
+  /* Junk estimator specific fixes */
+  [class*="bg-gray"], [class*="bg-red"] {
+    background-color: transparent !important;
+  }
   .text-sm {
     color: #111827 !important;
   }

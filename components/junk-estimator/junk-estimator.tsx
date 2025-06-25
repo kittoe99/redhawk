@@ -399,8 +399,8 @@ export function JunkEstimator() {
                 {selectedItems.length > 0 && (
                   <div className="mt-4 space-y-2">
                     {selectedItems.map((item) => (
-                      <div key={item.id} className="flex items-center justify-between bg-white border border-gray-200 p-2 rounded">
-                        <span className="text-sm font-medium text-gray-900">{item.name} x{item.quantity}</span>
+                      <div key={item.id} className="flex items-center justify-between bg-white border border-gray-200 p-3 rounded-lg shadow-sm">
+                        <span className="text-sm font-medium text-gray-900">{item.name} <span className="text-gray-600">x{item.quantity}</span></span>
                         <div className="flex items-center space-x-2">
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
@@ -466,17 +466,17 @@ export function JunkEstimator() {
       {currentStep !== "zip_code" && (
         <div className="bg-white border-b border-gray-200 py-4">
           <div className="container mx-auto px-4">
-            <div className="flex items-center justify-center space-x-2 text-sm text-gray-600">
+            <div className="flex items-center justify-center space-x-2 text-sm">
               <span className="text-primary-600 font-medium">ZIP: {zipCode}</span>
-              <span>•</span>
-              <span>Junk Removal Estimator</span>
+              <span className="text-gray-400">•</span>
+              <span className="text-gray-800">Junk Removal Estimator</span>
             </div>
           </div>
         </div>
       )}
 
       {/* Step content */}
-      <div className="container mx-auto px-4 py-8 bg-white">
+      <div className="container mx-auto px-4 py-8 bg-white text-gray-900">
         {renderStep()}
       </div>
 
