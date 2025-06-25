@@ -13,7 +13,7 @@ export default function QuotePage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Script id="quote-schema" type="application/ld+json">
         {`
           {
@@ -32,10 +32,12 @@ export default function QuotePage() {
 
       <MainNav />
 
-      <main className="pt-16">
-        <QuoteWizardProvider>
-          <QuoteWizardContainer />
-        </QuoteWizardProvider>
+      <main className="min-h-[calc(100vh-64px)]">
+        <div className="bg-white">
+          <QuoteWizardProvider>
+            <QuoteWizardContainer />
+          </QuoteWizardProvider>
+        </div>
       </main>
 
       <HawkFooter />

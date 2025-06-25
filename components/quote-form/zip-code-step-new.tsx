@@ -33,7 +33,7 @@ const ZipCodeStep: React.FC = () => {
   }
 
   return (
-    <div className="max-w-lg mx-auto">
+    <div className="max-w-lg mx-auto bg-white rounded-lg p-6 shadow-sm">
       <div className="text-center mb-6">
         <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full mb-3 shadow-md">
           <MapPin className="w-5 h-5 text-white" />
