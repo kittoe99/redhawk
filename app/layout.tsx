@@ -105,12 +105,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${montserrat.variable} scroll-smooth`}>
-      <body className="bg-white">
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${montserrat.variable} scroll-smooth`} style={{ backgroundColor: '#ffffff' }}>
+      <body className="bg-white" style={{ backgroundColor: '#ffffff !important' }}>
         <LoaderProvider>
           <HawkLoader />
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-            <div className="pt-16 md:pt-20">
+            <div className="pt-16 md:pt-20" style={{ backgroundColor: '#ffffff' }}>
               {children}
             </div>
           </ThemeProvider>

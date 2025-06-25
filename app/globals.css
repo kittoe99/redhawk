@@ -58,6 +58,64 @@ section {
   background-color: #ffffff !important;
 }
 
+/* Mobile-specific overrides */
+@media (max-width: 768px) {
+  * {
+    background-color: white !important;
+  }
+  
+  body {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+  
+  html {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+  
+  div, section, main, article, aside, header, footer, nav {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+  
+  /* Override specific mobile viewport issues */
+  .min-h-screen {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+  
+  /* Override mobile-specific Tailwind classes */
+  .sm\:bg-gray-50,
+  .sm\:bg-gray-100,
+  .md\:bg-gray-50,
+  .md\:bg-gray-100,
+  .lg\:bg-gray-50,
+  .lg\:bg-gray-100 {
+    background-color: #ffffff !important;
+  }
+}
+
+/* Extra mobile devices */
+@media (max-width: 480px) {
+  * {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  body {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+  
+  * {
+    background-color: #ffffff !important;
+  }
+}
+
 /* Custom border styles for the site */
 @layer components {
   .border-strong {
