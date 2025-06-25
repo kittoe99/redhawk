@@ -461,10 +461,10 @@ export function JunkEstimator() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white" style={{ backgroundColor: '#ffffff' }}>
       {/* Progress indicator */}
       {currentStep !== "zip_code" && (
-        <div className="bg-white border-b border-gray-200 py-4">
+        <div className="bg-white border-b border-gray-200 py-4" style={{ backgroundColor: '#ffffff' }}>
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-center space-x-2 text-sm text-gray-600">
               <span className="text-primary-600 font-medium">ZIP: {zipCode}</span>
@@ -476,7 +476,7 @@ export function JunkEstimator() {
       )}
 
       {/* Step content */}
-      <div className="container mx-auto px-4 py-8 bg-white">
+      <div className="container mx-auto px-4 py-8 bg-white" style={{ backgroundColor: '#ffffff' }}>
         {renderStep()}
       </div>
 

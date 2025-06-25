@@ -60,10 +60,6 @@ section {
 
 /* Mobile-specific overrides */
 @media (max-width: 768px) {
-  * {
-    background-color: white !important;
-  }
-  
   body {
     background: #ffffff !important;
     background-color: #ffffff !important;
@@ -74,7 +70,14 @@ section {
     background-color: #ffffff !important;
   }
   
-  div, section, main, article, aside, header, footer, nav {
+  div:not([class*="image"]):not([class*="img"]):not([class*="picture"]), 
+  section, 
+  main, 
+  article, 
+  aside, 
+  header, 
+  footer, 
+  nav {
     background: #ffffff !important;
     background-color: #ffffff !important;
   }
@@ -98,7 +101,15 @@ section {
 
 /* Extra mobile devices */
 @media (max-width: 480px) {
-  * {
+  body, html {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+  
+  div:not([class*="image"]):not([class*="img"]):not([class*="picture"]), 
+  section, 
+  main, 
+  article {
     background: #ffffff !important;
     background-color: #ffffff !important;
   }
@@ -111,7 +122,8 @@ section {
     background-color: #ffffff !important;
   }
   
-  * {
+  html {
+    background: #ffffff !important;
     background-color: #ffffff !important;
   }
 }
