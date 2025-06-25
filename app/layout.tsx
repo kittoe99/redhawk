@@ -110,7 +110,9 @@ export default function RootLayout({
         <LoaderProvider>
           <HawkLoader />
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-            {children}
+            <div className="pt-16 md:pt-20">
+              {children}
+            </div>
           </ThemeProvider>
         </LoaderProvider>
       </body>

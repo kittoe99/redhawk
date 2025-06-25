@@ -72,7 +72,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
                   size="lg"
                   className="bg-primary-600 hover:bg-primary-700 text-white inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-semibold"
                 >
-                  Get Free Quote
+                  Pricing
                   <ArrowRight className="h-5 w-5" />
                 </Button>
               </Link>

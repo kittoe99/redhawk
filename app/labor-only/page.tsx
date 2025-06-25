@@ -157,7 +157,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
                   size="lg"
                   className="bg-primary-600 hover:bg-primary-700 text-white inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-semibold"
                 >
-                  Get Free Quote
+                  Pricing
                   <ArrowRight className="h-5 w-5" />
                 </Button>
               </Link>
@@ -238,36 +238,35 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
         </div>
       </section>
 
-      {/* SERVICE AREAS SECTION */}
+      {/* SERVICE AREAS SECTION - COMPACT */}
       <section className="py-12 md:py-16 bg-white">
         <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-secondary-900 mb-4">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-bold text-secondary-900 mb-3">
               Serving Major Cities Nationwide
             </h2>
-            <p className="text-lg text-secondary-600 max-w-2xl mx-auto">
+            <p className="text-secondary-600 max-w-2xl mx-auto text-sm md:text-base">
               Professional labor-only moving services available in top metropolitan areas.
             </p>
           </div>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3 md:gap-4">
             {serviceAreas.map((area, index) => (
-              <div key={index} className="group bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 p-4 text-center">
-                <MapPin className="h-8 w-8 text-primary-600 mx-auto mb-3" />
-                <h3 className="font-semibold text-secondary-900 mb-1">{area.city}</h3>
-                <p className="text-sm text-secondary-600 mb-1">{area.state}</p>
-                <p className="text-xs text-gray-500">{area.population}</p>
+              <div key={index} className="group bg-white rounded-lg border border-gray-100 hover:border-primary-100 transition-all duration-200 p-2 sm:p-3 text-center">
+                <MapPin className="h-5 w-5 text-primary-600 mx-auto mb-1 sm:mb-2" />
+                <h3 className="font-medium text-sm text-secondary-900 truncate">{area.city}</h3>
+                <p className="text-xs text-gray-500">{area.state}</p>
               </div>
             ))}
           </div>
           
-          <div className="text-center mt-10">
+          <div className="text-center mt-8">
             <Link
               href="/quote"
-              className="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-700 transition-colors duration-300 shadow-sm hover:shadow-md"
+              className="inline-flex items-center text-sm px-5 py-2.5 bg-primary-600 text-white font-medium rounded-lg hover:bg-primary-700 transition-colors duration-200"
             >
-              Find Help in Your City
-              <ArrowRight className="ml-2 h-4 w-4" />
+              Get a Free Quote
+              <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
             </Link>
           </div>
         </div>
@@ -328,7 +327,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
                 size="lg"
                 className="bg-primary-600 hover:bg-primary-700 text-white inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-semibold"
               >
-                Get Free Quote
+                Pricing
                 <ArrowRight className="h-5 w-5" />
               </Button>
             </Link>

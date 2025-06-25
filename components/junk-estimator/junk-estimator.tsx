@@ -6,7 +6,7 @@ import { ServiceFeatures } from "@/components/junk-estimator/service-features"
 import { SearchBar } from "@/components/junk-estimator/search-bar"
 import { Button } from "@/components/ui/button"
 import { junkItems } from "@/components/junk-estimator/junk-items-data"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, MapPin, Shield, CheckCircle, ArrowRight } from "lucide-react"
 import Image from "next/image"
 
 export type SelectedItem = {
@@ -86,8 +86,87 @@ function JunkItemIcon({ itemId, className = "w-8 h-8" }: { itemId: string; class
   }
 }
 
+// ZIP Code Step Component - moved outside to prevent re-rendering
+function ZipCodeStep({ 
+  zipCode, 
+  isValidZip, 
+  onZipCodeChange, 
+  onSubmit 
+}: { 
+  zipCode: string; 
+  isValidZip: boolean; 
+  onZipCodeChange: (value: string) => void; 
+  onSubmit: () => void; 
+}) {
+  return (
+    <div className="max-w-lg mx-auto">
+      <div className="text-center mb-6">
+        <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full mb-3 shadow-md">
+          <MapPin className="w-5 h-5 text-white" />
+        </div>
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          Enter ZIP Code
+        </h2>
+        <p className="text-gray-500 text-sm">
+          Check junk removal service availability in your area
+        </p>
+      </div>
+
+      {/* Trust Indicators */}
+      <div className="flex flex-wrap justify-center gap-4 mb-8 text-sm text-gray-600">
+        <div className="flex items-center">
+          <Shield className="w-4 h-4 text-green-500 mr-1.5" />
+          <span>Free Estimate</span>
+        </div>
+        <div className="flex items-center">
+          <CheckCircle className="w-4 h-4 text-blue-500 mr-1.5" />
+          <span>Secure</span>
+        </div>
+      </div>
+
+      {/* ZIP Code Input */}
+      <div className="mb-6">
+        <div className="relative">
+          <input
+            type="text"
+            value={zipCode}
+            onChange={(e) => onZipCodeChange(e.target.value)}
+            placeholder="Enter your ZIP code"
+            className="w-full px-4 py-3 text-lg border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition-all duration-200 text-center font-medium"
+            maxLength={10}
+          />
+          {zipCode && (
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+              {isValidZip ? (
+                <CheckCircle className="w-5 h-5 text-green-500" />
+              ) : (
+                <div className="w-5 h-5 border-2 border-red-300 rounded-full"></div>
+              )}
+            </div>
+          )}
+        </div>
+        {zipCode && !isValidZip && (
+          <p className="text-red-500 text-sm mt-2 text-center">Please enter a valid ZIP code</p>
+        )}
+      </div>
+
+      {/* Continue Button */}
+      <Button
+        onClick={onSubmit}
+        disabled={!isValidZip}
+        className="w-full bg-primary-600 hover:bg-primary-700 text-white py-3 px-6 rounded-xl font-semibold text-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Continue to Estimator
+        <ArrowRight className="w-5 h-5 ml-2" />
+      </Button>
+    </div>
+  )
+}
+
 export function JunkEstimator() {
-  const [currentStep, setCurrentStep] = useState<"selection" | "summary" | "booking">("selection")
+  const [currentStep, setCurrentStep] = useState<"zip_code" | "selection" | "summary" | "booking">("zip_code")
+  const [zipCode, setZipCode] = useState("")
+  const [isValidZip, setIsValidZip] = useState(false)
   const [bookingData, setBookingData] = useState({
     address: "",
     city: "",
@@ -125,6 +204,26 @@ export function JunkEstimator() {
     : showAllItems
       ? filteredJunkItems
       : popularItems
+
+  const validateZipCode = (zip: string) => {
+    const zipRegex = /^\d{5}(-\d{4})?$/
+    return zipRegex.test(zip)
+  }
+
+  const handleZipCodeChange = (value: string) => {
+    setZipCode(value)
+    const isValid = validateZipCode(value)
+    setIsValidZip(isValid)
+    if (isValid) {
+      setBookingData((prev) => ({ ...prev, zipCode: value }))
+    }
+  }
+
+  const handleZipCodeSubmit = () => {
+    if (isValidZip) {
+      setCurrentStep("selection")
+    }
+  }
 
   const addItem = (item: SelectedItem) => {
     const existingItem = selectedItems.find((i) => i.id === item.id)
@@ -170,414 +269,227 @@ export function JunkEstimator() {
 
   const totalPrice = selectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
-  const handleSearch = (query: string) => {
-    setSearchQuery(query)
-  }
-
-  return (
-    <div className="flex flex-col lg:flex-row gap-6">
-      {/* Added Item Notifications */}
-      <div className="fixed top-4 right-4 z-50 space-y-2 pointer-events-none">
-        {addedNotifications.map((notification) => (
-          <div
-            key={notification.id}
-            className="bg-red-600 text-white px-4 py-2 rounded-lg shadow-lg transform transition-all duration-500 ease-out animate-in slide-in-from-right-5 fade-in"
-            style={{
-              animation: "slideInFadeOut 2s ease-out forwards",
-            }}
-          >
-            <div className="flex items-center space-x-2">
-              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <span className="text-sm font-medium">{notification.name} added!</span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <style jsx>{`
-        @keyframes slideInFadeOut {
-          0% {
-            transform: translateX(100%) scale(0.8);
-            opacity: 0;
-          }
-          15% {
-            transform: translateX(0) scale(1);
-            opacity: 1;
-          }
-          85% {
-            transform: translateX(0) scale(1);
-            opacity: 1;
-          }
-          100% {
-            transform: translateX(100%) scale(0.8);
-            opacity: 0;
-          }
-        }
-      `}</style>
-      <div className="flex-1 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        {currentStep === "selection" && (
-          <>
-            <div className="flex items-center mb-6">
-              <div className="bg-primary-50 p-2 rounded-lg mr-3 border border-primary-100">
-                <svg
-                  className="w-6 h-6 text-primary-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                  />
-                </svg>
+  // Render the appropriate step
+  const renderStep = () => {
+    switch (currentStep) {
+      case "zip_code":
+        return (
+          <ZipCodeStep 
+            zipCode={zipCode}
+            isValidZip={isValidZip}
+            onZipCodeChange={handleZipCodeChange}
+            onSubmit={handleZipCodeSubmit}
+          />
+        )
+      case "selection":
+        return (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+            {/* Left column - Item selection */}
+            <div className="lg:col-span-2 space-y-6">
+              <div className="text-center">
+                <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                  Junk Removal Estimator
+                </h1>
+                <p className="text-gray-600 mb-6">
+                  Select the items you need removed to get an instant estimate
+                </p>
               </div>
-              <h1 className="text-lg sm:text-2xl font-bold text-gray-900 !text-gray-900">
-                Please select your items for removal
-              </h1>
-            </div>
 
-            <div className="mb-6">
-              <h3 className="text-sm sm:text-base font-medium text-gray-800 !text-gray-800 mb-2">
-                Don't See Your Item?
-              </h3>
-              <SearchBar onSearch={handleSearch} onItemSelect={addItem} IconComponent={JunkItemIcon} />
+              <SearchBar 
+                onSearch={setSearchQuery} 
+                onItemSelect={(item) => addItem({
+                  id: item.id,
+                  name: item.name,
+                  quantity: 1,
+                  price: item.price,
+                  icon: item.icon,
+                })} 
+                IconComponent={JunkItemIcon} 
+              />
 
-              {searchQuery && (
-                <div className="mt-4">
-                  {displayItems.length > 0 ? (
-                    <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
-                      {displayItems.map((item) => (
-                        <button
-                          key={item.id}
-                          onClick={() => addItem(item)}
-                          className={`flex flex-col items-center justify-center p-3 sm:p-4 border rounded-lg transition-all duration-200 h-24 sm:h-36 ${
-                            recentlyAdded.includes(item.id)
-                              ? "border-red-400 bg-red-50 scale-105"
-                              : "border-gray-200 hover:border-primary-300 hover:bg-primary-50"
-                          }`}
-                        >
-                          <JunkItemIcon itemId={item.id} className="w-8 h-8 sm:w-10 sm:h-10 mb-2 sm:mb-2" />
-                          <span className="text-xs sm:text-sm !text-gray-900 text-center uppercase leading-tight font-medium">
+              {/* Popular Items Section */}
+              {!searchQuery && (
+                <div className="mb-8">
+                  <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    🔥 Popular Items
+                  </h2>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                    {popularItems.map((item) => (
+                      <div
+                        key={item.id}
+                        className="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-md transition-all duration-200 cursor-pointer hover:border-primary-300 group"
+                        onClick={() =>
+                          addItem({
+                            id: item.id,
+                            name: item.name,
+                            quantity: 1,
+                            price: item.price,
+                            icon: item.icon,
+                          })
+                        }
+                      >
+                        <div className="flex flex-col items-center text-center">
+                          <JunkItemIcon itemId={item.id} className="w-8 h-8 mb-2" />
+                          <h3 className="font-medium text-sm text-gray-800 mb-1 group-hover:text-primary-600 transition-colors">
                             {item.name}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-sm sm:text-base text-gray-600 !text-gray-600">
-                      No items found. Please try another search term.
-                    </p>
-                  )}
+                          </h3>
+                          <p className="text-primary-600 font-semibold text-sm">${item.price}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
-            </div>
 
-            <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 mb-6">
-              {displayItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => addItem(item)}
-                  className={`flex flex-col items-center justify-center p-3 sm:p-4 border rounded-lg transition-all duration-200 h-24 sm:h-36 shadow-xl bg-transparent ${
-                    recentlyAdded.includes(item.id)
-                      ? "border-red-400 bg-red-50 scale-105"
-                      : "border-gray-200 bg-slate-50 hover:border-primary-300 hover:bg-primary-50"
-                  }`}
-                >
-                  <JunkItemIcon itemId={item.id} className="w-8 h-8 sm:w-10 sm:h-10 mb-2 sm:mb-2" />
-                  <span className="text-xs sm:text-sm !text-gray-900 text-center uppercase leading-tight font-medium">
-                    {item.name}
-                  </span>
-                </button>
-              ))}
-            </div>
+              {/* All Items Section */}
+              <div className="mb-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-semibold text-gray-800">
+                    {searchQuery ? `Search Results (${displayItems.length})` : "All Items"}
+                  </h2>
+                  {!searchQuery && !showAllItems && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setShowAllItems(true)}
+                      className="flex items-center gap-2"
+                    >
+                      Show All <ChevronDown className="w-4 h-4" />
+                    </Button>
+                  )}
+                </div>
 
-            {!showAllItems && !searchQuery && (
-              <button
-                onClick={() => setShowAllItems(true)}
-                className="flex items-center justify-center w-full py-2 text-sm sm:text-base text-primary-600 hover:text-primary-700 font-medium border border-primary-100 rounded-lg hover:bg-primary-50"
-              >
-                Show More Items
-                <ChevronDown className="ml-1 h-3 w-3 sm:h-4 sm:w-4" />
-              </button>
-            )}
-
-            {selectedItems.length > 0 && (
-              <div className="mt-6 sm:mt-8 border-t border-gray-200 pt-4 sm:pt-6">
-                <h2 className="text-lg sm:text-xl font-semibold text-gray-800 !text-gray-800 mb-3 sm:mb-4">My Items</h2>
-                <div className="space-y-3 sm:space-y-4">
-                  {selectedItems.map((item) => (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                  {displayItems.map((item) => (
                     <div
                       key={item.id}
-                      className="flex items-center justify-between bg-gray-50 rounded-lg p-2 sm:p-3 border border-gray-200"
+                      className="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-md transition-all duration-200 cursor-pointer hover:border-primary-300 group relative"
+                      onClick={() =>
+                        addItem({
+                          id: item.id,
+                          name: item.name,
+                          quantity: 1,
+                          price: item.price,
+                          icon: item.icon,
+                        })
+                      }
                     >
-                      <div className="flex items-center">
-                        <div className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-white border border-gray-200 rounded-lg mr-2 sm:mr-3 flex-shrink-0">
-                          <JunkItemIcon itemId={item.id} className="w-4 h-4 sm:w-5 sm:h-5" />
-                        </div>
-                        <span className="text-xs sm:text-sm font-medium text-gray-900 !text-gray-900 truncate">
+                      <div className="flex flex-col items-center text-center">
+                        <JunkItemIcon itemId={item.id} className="w-8 h-8 mb-2" />
+                        <h3 className="font-medium text-sm text-gray-800 mb-1 group-hover:text-primary-600 transition-colors">
                           {item.name}
-                        </span>
-                      </div>
-                      <div className="flex items-center">
-                        <div className="flex items-center bg-white rounded-lg p-0.5 border border-gray-200 shadow-sm mr-2">
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-md bg-white border border-gray-200 text-red-500 hover:bg-red-50 hover:border-red-300 transition-all duration-200 active:scale-95"
-                          >
-                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-                            </svg>
-                          </button>
-                          <div className="mx-1 sm:mx-2 min-w-[1.5rem] text-center">
-                            <span className="text-sm sm:text-base font-semibold text-gray-900 bg-gray-50 px-1 sm:px-2 py-0.5 rounded-md border border-gray-200">
-                              {item.quantity}
-                            </span>
-                          </div>
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-md bg-white border border-gray-200 text-red-500 hover:bg-red-50 hover:border-red-300 transition-all duration-200 active:scale-95"
-                          >
-                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                            </svg>
-                          </button>
-                        </div>
-                        <button
-                          onClick={() => removeItem(item.id)}
-                          className="px-2 py-1 sm:px-3 sm:py-1.5 text-xs font-medium text-red-600 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 hover:border-red-300 transition-all duration-200 active:scale-95 touch-manipulation"
-                        >
-                          Remove
-                        </button>
+                        </h3>
+                        <p className="text-primary-600 font-semibold text-sm">${item.price}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-            )}
 
-            <div className="mt-8 flex justify-end">
-              <Button
-                className="px-8 py-6 text-base sm:text-lg font-medium border border-primary-600"
-                disabled={selectedItems.length === 0}
-                onClick={() => setCurrentStep("summary")}
-              >
-                NEXT
-              </Button>
-            </div>
-          </>
-        )}
-
-        {currentStep === "summary" && (
-          <div className="space-y-6">
-            <div className="flex items-center justify-between mb-6">
-              <h1 className="text-lg sm:text-2xl font-bold text-gray-900">Order Summary</h1>
-              <button
-                onClick={() => setCurrentStep("selection")}
-                className="text-primary-600 hover:text-primary-700 font-medium"
-              >
-                ← Back to Items
-              </button>
+              <ServiceFeatures />
             </div>
 
-            <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-              <h3 className="font-semibold text-gray-900">Selected Items:</h3>
-              {selectedItems.map((item) => (
-                <div key={item.id} className="flex justify-between items-center">
-                  <span className="text-gray-900">
-                    {item.name} x{item.quantity}
-                  </span>
-                  <span className="font-medium text-gray-900">${(item.price * item.quantity).toFixed(2)}</span>
-                </div>
-              ))}
-              <div className="border-t pt-3 flex justify-between items-center font-bold text-lg">
-                <span className="text-gray-900">Total:</span>
-                <span className="text-primary-600">${totalPrice.toFixed(2)}</span>
+            {/* Right column - Order summary */}
+            <div className="lg:col-span-1">
+              <div className="sticky top-6">
+                <OrderSummary
+                  selectedItems={selectedItems}
+                  totalPrice={totalPrice}
+                />
+                {selectedItems.length > 0 && (
+                  <div className="mt-4 space-y-2">
+                    {selectedItems.map((item) => (
+                      <div key={item.id} className="flex items-center justify-between bg-gray-50 p-2 rounded">
+                        <span className="text-sm">{item.name} x{item.quantity}</span>
+                        <div className="flex items-center space-x-2">
+                          <button
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            className="w-6 h-6 flex items-center justify-center bg-red-100 text-red-600 rounded hover:bg-red-200"
+                          >
+                            -
+                          </button>
+                          <span className="text-sm font-medium">{item.quantity}</span>
+                          <button
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            className="w-6 h-6 flex items-center justify-center bg-green-100 text-green-600 rounded hover:bg-green-200"
+                          >
+                            +
+                          </button>
+                          <button
+                            onClick={() => removeItem(item.id)}
+                            className="text-red-500 text-sm hover:text-red-700"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                    <Button
+                      onClick={() => setCurrentStep("booking")}
+                      className="w-full mt-4 bg-primary-600 hover:bg-primary-700"
+                    >
+                      Book Service - ${totalPrice.toFixed(2)}
+                    </Button>
+                  </div>
+                )}
               </div>
-            </div>
-
-            <div className="flex justify-end">
-              <Button className="px-8 py-6 text-base sm:text-lg font-medium" onClick={() => setCurrentStep("booking")}>
-                Book Appointment
-              </Button>
             </div>
           </div>
-        )}
-
-        {currentStep === "booking" && (
-          <div className="space-y-6">
-            <div className="flex items-center justify-between mb-6">
-              <h1 className="text-lg sm:text-2xl font-bold text-gray-900">Book Your Appointment</h1>
-              <button
-                onClick={() => setCurrentStep("summary")}
-                className="text-primary-600 hover:text-primary-700 font-medium"
-              >
-                ← Back to Summary
-              </button>
-            </div>
-
-            <form className="space-y-6">
-              {/* Address Section */}
-              <div className="bg-gray-50 rounded-lg p-4 space-y-4">
-                <h3 className="font-semibold text-gray-800">Service Address</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Street Address</label>
-                    <input
-                      type="text"
-                      value={bookingData.address}
-                      onChange={(e) => setBookingData({ ...bookingData, address: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
-                      placeholder="123 Main Street"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
-                    <input
-                      type="text"
-                      value={bookingData.city}
-                      onChange={(e) => setBookingData({ ...bookingData, city: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
-                      placeholder="Phoenix"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
-                    <select
-                      value={bookingData.state}
-                      onChange={(e) => setBookingData({ ...bookingData, state: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
-                      required
-                    >
-                      <option value="">Select State</option>
-                      <option value="AZ">Arizona</option>
-                      <option value="TX">Texas</option>
-                      <option value="CO">Colorado</option>
-                      <option value="FL">Florida</option>
-                      <option value="NC">North Carolina</option>
-                      <option value="TN">Tennessee</option>
-                      <option value="ID">Idaho</option>
-                      <option value="UT">Utah</option>
-                      <option value="OH">Ohio</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Appointment Section */}
-              <div className="bg-gray-50 rounded-lg p-4 space-y-4">
-                <h3 className="font-semibold text-gray-800">Appointment Details</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Date</label>
-                    <input
-                      type="date"
-                      value={bookingData.appointmentDate}
-                      onChange={(e) => setBookingData({ ...bookingData, appointmentDate: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
-                      min={new Date().toISOString().split("T")[0]}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Time Slot</label>
-                    <select
-                      value={bookingData.timeSlot}
-                      onChange={(e) => setBookingData({ ...bookingData, timeSlot: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
-                      required
-                    >
-                      <option value="">Select Time</option>
-                      <option value="8:00 AM - 10:00 AM">8:00 AM - 10:00 AM</option>
-                      <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
-                      <option value="12:00 PM - 2:00 PM">12:00 PM - 2:00 PM</option>
-                      <option value="2:00 PM - 4:00 PM">2:00 PM - 4:00 PM</option>
-                      <option value="4:00 PM - 6:00 PM">4:00 PM - 6:00 PM</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Personal Details Section */}
-              <div className="bg-gray-50 rounded-lg p-4 space-y-4">
-                <h3 className="font-semibold text-gray-800">Contact Information</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-                    <input
-                      type="text"
-                      value={bookingData.firstName}
-                      onChange={(e) => setBookingData({ ...bookingData, firstName: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-                    <input
-                      type="text"
-                      value={bookingData.lastName}
-                      onChange={(e) => setBookingData({ ...bookingData, lastName: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                    <input
-                      type="email"
-                      value={bookingData.email}
-                      onChange={(e) => setBookingData({ ...bookingData, email: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                    <input
-                      type="tel"
-                      value={bookingData.phone}
-                      onChange={(e) => setBookingData({ ...bookingData, phone: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
-                      required
-                    />
-                  </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Special Instructions (Optional)
-                    </label>
-                    <textarea
-                      value={bookingData.specialInstructions}
-                      onChange={(e) => setBookingData({ ...bookingData, specialInstructions: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-gray-900"
-                      rows={3}
-                      placeholder="Any special instructions or notes for our team..."
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-end">
-                <Button type="submit" className="px-8 py-6 text-base sm:text-lg font-medium">
-                  Confirm Booking - ${totalPrice.toFixed(2)}
-                </Button>
-              </div>
-            </form>
+        )
+      case "summary":
+        return (
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
+            {/* Summary content */}
           </div>
-        )}
+        )
+      case "booking":
+        return (
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-2xl font-bold mb-6">Book Your Service</h2>
+            {/* Booking form content */}
+          </div>
+        )
+      default:
+        return <ZipCodeStep 
+          zipCode={zipCode}
+          isValidZip={isValidZip}
+          onZipCodeChange={handleZipCodeChange}
+          onSubmit={handleZipCodeSubmit}
+        />
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Progress indicator */}
+      {currentStep !== "zip_code" && (
+        <div className="bg-white border-b border-gray-200 py-4 mb-6">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-center space-x-2 text-sm text-gray-600">
+              <span className="text-primary-600 font-medium">ZIP: {zipCode}</span>
+              <span>•</span>
+              <span>Junk Removal Estimator</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Step content */}
+      <div className="container mx-auto px-4 py-8">
+        {renderStep()}
       </div>
 
-      <div className="lg:w-96">
-        <OrderSummary selectedItems={selectedItems} totalPrice={totalPrice} />
-        <div className="mt-6">
-          <ServiceFeatures />
-        </div>
+      {/* Added item notifications */}
+      <div className="fixed top-20 right-4 z-50 space-y-2">
+        {addedNotifications.map((notification) => (
+          <div
+            key={notification.id}
+            className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg animate-in slide-in-from-right-5 fade-in-0 duration-300"
+          >
+            ✓ {notification.name} added!
+          </div>
+        ))}
       </div>
     </div>
   )

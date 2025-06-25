@@ -156,15 +156,15 @@ const ZipCodeStep: React.FC = () => {
       <style jsx>{styles}</style>
       
       {/* Enhanced Header */}
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full mb-4 shadow-lg">
-          <MapPin className="w-8 h-8 text-white" />
+      <div className="text-center mb-6">
+        <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full mb-3 shadow-md">
+          <MapPin className="w-5 h-5 text-white" />
         </div>
-        <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-3">
-          Enter Your ZIP Code
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          Enter ZIP Code
         </h2>
-        <p className="text-gray-600 text-base md:text-lg leading-relaxed">
-          We'll check if our moving services are available in your area and provide you with an accurate estimate.
+        <p className="text-gray-500 text-sm">
+          Check service availability in your area
         </p>
       </div>
 
