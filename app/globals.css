@@ -62,14 +62,20 @@ body {
   }
   
   /* Ensure all text is visible */
-  h1, h2, h3, h4, h5, h6, p, span, div {
+  h1, h2, h3, h4, h5, h6, p, div {
     color: #111827 !important;
   }
   
+  /* Preserve button styles */
+  button, .btn, [class*="btn-"], [class*="bg-"]:not([class*="bg-gray"]):not([class*="bg-red-"]):not([class*="bg-opacity"]) {
+    color: inherit !important;
+  }
+  
   /* Junk estimator specific fixes */
-  [class*="bg-gray"], [class*="bg-red"] {
+  [class*="bg-gray"] {
     background-color: transparent !important;
   }
+  
   .text-sm {
     color: #111827 !important;
   }
