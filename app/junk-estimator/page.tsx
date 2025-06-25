@@ -6,7 +6,7 @@ import Script from "next/script"
 
 export default function JunkEstimatorPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Script id="junk-estimator-schema" type="application/ld+json">
         {`
           {
@@ -25,8 +25,8 @@ export default function JunkEstimatorPage() {
 
       <MainNav />
 
-      <main className="pt-16">
-        <div className="container mx-auto px-3 md:px-4 py-4 md:py-8 max-w-6xl">
+      <main className="min-h-[calc(100vh-64px)]">
+        <div className="bg-white">
           <JunkEstimator />
         </div>
       </main>
