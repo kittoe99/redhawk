@@ -36,6 +36,12 @@ body {
     background-color: #ffffff !important;
   }
   
+  /* Fix gray backgrounds on mobile */
+  .bg-gray-50 {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+  }
+  
   /* Ensure text visibility on mobile */
   .text-gray-500 {
     color: #6b7280 !important;
@@ -64,6 +70,11 @@ body {
   
   /* Ensure headings are dark enough */
   h1, h2, h3, h4, h5, h6 {
+    color: #111827 !important;
+  }
+  
+  /* Text size fixes for better visibility */
+  .text-sm {
     color: #111827 !important;
   }
 }

@@ -399,8 +399,8 @@ export function JunkEstimator() {
                 {selectedItems.length > 0 && (
                   <div className="mt-4 space-y-2">
                     {selectedItems.map((item) => (
-                      <div key={item.id} className="flex items-center justify-between bg-gray-50 p-2 rounded">
-                        <span className="text-sm">{item.name} x{item.quantity}</span>
+                      <div key={item.id} className="flex items-center justify-between bg-white border border-gray-200 p-2 rounded">
+                        <span className="text-sm font-medium text-gray-900">{item.name} x{item.quantity}</span>
                         <div className="flex items-center space-x-2">
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
