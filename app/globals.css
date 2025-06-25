@@ -30,57 +30,6 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Mobile-specific styles */
-@media (max-width: 768px) {
-  /* Force white background on all pages */
-  html, body, #root, #__next,
-  .min-h-screen, .bg-white, .bg-gray-50,
-  .bg-gray-100, .bg-gray-200 {
-    background-color: #ffffff !important;
-  }
-  
-  /* Ensure text visibility on mobile */
-  .text-gray-500 {
-    color: #4b5563 !important; /* Darker gray for better contrast */
-  }
-  
-  .text-gray-600 {
-    color: #374151 !important;
-  }
-  
-  .text-gray-700 {
-    color: #1f2937 !important;
-  }
-  
-  .text-gray-800, .text-gray-900 {
-    color: #111827 !important;
-  }
-  
-  /* Input and placeholder text */
-  input::placeholder, .placeholder-gray-500::placeholder {
-    color: #6b7280 !important;
-  }
-  
-  /* Ensure all text is visible */
-  h1, h2, h3, h4, h5, h6, p, div {
-    color: #111827 !important;
-  }
-  
-  /* Preserve button styles */
-  button, .btn, [class*="btn-"], [class*="bg-"]:not([class*="bg-gray"]):not([class*="bg-red-"]):not([class*="bg-opacity"]) {
-    color: inherit !important;
-  }
-  
-  /* Junk estimator specific fixes */
-  [class*="bg-gray"] {
-    background-color: transparent !important;
-  }
-  
-  .text-sm {
-    color: #111827 !important;
-  }
-}
-
 /* Custom border styles for the site */
 @layer components {
   .border-strong {
