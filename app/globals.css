@@ -35,6 +35,37 @@ body {
   .min-h-screen {
     background-color: #ffffff !important;
   }
+  
+  /* Ensure text visibility on mobile */
+  .text-gray-500 {
+    color: #6b7280 !important;
+  }
+  
+  .text-gray-600 {
+    color: #4b5563 !important;
+  }
+  
+  .text-gray-700 {
+    color: #374151 !important;
+  }
+  
+  .text-gray-800 {
+    color: #1f2937 !important;
+  }
+  
+  .text-gray-900 {
+    color: #111827 !important;
+  }
+  
+  /* Input and placeholder text */
+  input.placeholder-gray-500::placeholder {
+    color: #6b7280 !important;
+  }
+  
+  /* Ensure headings are dark enough */
+  h1, h2, h3, h4, h5, h6 {
+    color: #111827 !important;
+  }
 }
 
 /* Custom border styles for the site */
