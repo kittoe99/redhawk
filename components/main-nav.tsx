@@ -162,7 +162,7 @@ export function MainNav() {
       } ${inter.variable} ${montserrat.variable} border-b border-gray-200`}
     >
       {/* Top utility navigation */}
-      <div className="bg-gray-100 text-gray-700 w-full">
+      <div className="bg-gray-100 text-gray-700 w-full hidden md:block">
         <div className="w-full max-w-7xl mx-auto flex items-center justify-between h-10 px-4">
           <div className="flex items-center space-x-2">
             <MapPin className="h-3 w-3 text-primary-600" />
@@ -203,7 +203,7 @@ export function MainNav() {
             </div>
 
             {/* Desktop Navigation - Hidden on mobile */}
-            <div className="hidden lg:flex items-center justify-between flex-1 ml-10">
+            <div className="hidden md:flex items-center justify-between flex-1 ml-10">
               <nav className="flex items-center space-x-8">
                 {mainNavItems.map((item) => (
                   <Link
@@ -295,7 +295,7 @@ export function MainNav() {
             </div>
 
             {/* Mobile Menu Button - Hidden on desktop */}
-            <div className="lg:hidden flex items-center space-x-2">
+            <div className="md:hidden flex items-center space-x-2">
               <Link
                 href="/quote"
                 className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded text-sm font-bold transition-colors"
@@ -316,7 +316,7 @@ export function MainNav() {
 
       {/* Mobile Menu - Hidden on desktop */}
       <div 
-        className={`fixed inset-0 z-50 transition-all duration-300 ease-in-out ${
+        className={`md:hidden fixed inset-0 z-50 transition-all duration-300 ease-in-out ${
           isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         }`}
       >
