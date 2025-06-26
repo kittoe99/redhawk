@@ -4,106 +4,64 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 255, 255, 255;
   --background-light-red: #fff1f1;
   --brand-primary: #d30000;
   --brand-secondary: #b30000;
   --background-primary: #ffffff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
+/* Base styles */
 html {
   scroll-behavior: smooth;
+  background-color: white;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: #ffffff !important;
+  color: #1a1a1a; /* Dark gray for better readability */
+  background-color: white;
   -webkit-overflow-scrolling: touch;
 }
 
-/* Ensure all sections have white background by default */
-section {
-  background-color: #ffffff !important;
+/* Reset background overrides */
+img,
+[class*="image"],
+[class*="img"],
+[class*="picture"],
+[class*="hero"],
+.picture,
+.image,
+.img,
+.hero {
+  background: transparent;
 }
 
-/* Override any background patterns or gradients */
-.bg-pattern-primary-dots,
-.bg-gradient-to-b,
-.bg-gradient-to-t,
-.bg-gradient-to-r,
-.bg-gradient-to-l {
-  background: #ffffff !important;
+/* Ensure text is always visible */
+h1, h2, h3, h4, h5, h6,
+p, span, div, a {
+  color: inherit;
 }
 
+/* Remove background overrides for content areas */
+body > main,
+body > div,
+section,
+article {
+  background-color: white;
+}
 
-/* Mobile-specific overrides */
+/* Mobile-specific styles */
 @media (max-width: 768px) {
-  body {
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-  }
-  
-  html {
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-  }
-  
-  div:not([class*="image"]):not([class*="img"]):not([class*="picture"]), 
-  section, 
-  main, 
-  article, 
-  aside, 
-  header, 
-  footer, 
-  nav {
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-  }
-  
-  /* Override specific mobile viewport issues */
-  .min-h-screen {
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-  }
-  
-
-}
-
-/* Extra mobile devices */
-@media (max-width: 480px) {
-  body, html {
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-  }
-  
-  div:not([class*="image"]):not([class*="img"]):not([class*="picture"]), 
-  section, 
-  main, 
-  article {
-    background: #ffffff !important;
-    background-color: #ffffff !important;
+  html, body {
+    background-color: white;
+    color: #1a1a1a;
   }
 }
 
 /* iOS Safari specific fixes */
 @supports (-webkit-touch-callout: none) {
-  body {
-    background: #ffffff !important;
-    background-color: #ffffff !important;
-  }
-  
-  html {
-    background: #ffffff !important;
-    background-color: #ffffff !important;
+  html, body {
+    background-color: white;
+    color: #1a1a1a;
   }
 }
 
