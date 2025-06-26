@@ -48,10 +48,13 @@ export function PropertyDetailsStep({ numberOfBedrooms, hasStairs, onNext, onBac
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
-      <div className="space-y-3">
-        <h3 className="text-xl font-semibold text-gray-900">Property Details</h3>
-        <p className="text-sm text-gray-600">Tell us about your property to get an accurate estimate</p>
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto w-full">
+      <div className="space-y-2 text-center mb-6">
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary-50 mb-3 mx-auto">
+          <Home className="h-6 w-6 text-primary-600" />
+        </div>
+        <h3 className="text-2xl font-bold text-gray-900">Property Details</h3>
+        <p className="text-gray-600">Tell us about your property to get an accurate estimate</p>
       </div>
 
       {/* Number of Bedrooms Selection */}
@@ -60,14 +63,14 @@ export function PropertyDetailsStep({ numberOfBedrooms, hasStairs, onNext, onBac
           <Home className="h-5 w-5 text-primary-600 mr-2" />
           <label className="text-sm font-medium text-gray-700">Number of Bedrooms</label>
         </div>
-        <div className="grid grid-cols-5 gap-2">
+        <div className="grid grid-cols-5 gap-3">
           {bedroomOptions.map((option) => (
             <button
               key={option}
               type="button"
-              className={`py-3 px-3 border-2 rounded-lg text-center transition-all duration-200 ${
+              className={`py-3 border-2 rounded-lg text-center transition-all duration-200 ${
                 selectedBedrooms === option
-                  ? "border-primary-600 bg-primary-50 text-primary-700 shadow-md"
+                  ? "border-primary-600 bg-primary-50 text-primary-700 shadow-sm"
                   : "border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-700"
               }`}
               onClick={() => {
@@ -82,7 +85,7 @@ export function PropertyDetailsStep({ numberOfBedrooms, hasStairs, onNext, onBac
       </div>
 
       {/* Stairs Selection */}
-      <div className="space-y-4">
+      <div className="space-y-4 pt-2">
         <div className="flex items-center">
           <Stairs className="h-5 w-5 text-primary-600 mr-2" />
           <label className="text-sm font-medium text-gray-700">Do stairs apply?</label>
@@ -90,14 +93,14 @@ export function PropertyDetailsStep({ numberOfBedrooms, hasStairs, onNext, onBac
         <div className="grid grid-cols-2 gap-4">
           <button
             type="button"
-            className={`py-4 px-4 border-2 rounded-lg text-center transition-all duration-200 ${
+            className={`py-3 border-2 rounded-lg text-center transition-all duration-200 ${
               stairsRequired === true
-                ? "border-primary-600 bg-primary-50 text-primary-700 shadow-md"
+                ? "border-primary-600 bg-primary-50 text-primary-700 shadow-sm"
                 : "border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-700"
             }`}
             onClick={() => setStairsRequired(true)}
           >
-            <span className="text-lg">Yes</span>
+            <span className="text-base">Yes</span>
           </button>
           <button
             type="button"

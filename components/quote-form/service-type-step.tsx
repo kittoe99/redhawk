@@ -71,27 +71,23 @@ export function ServiceTypeStep({
   }
 
   return (
-    <div className="relative">
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-white -z-10" />
-      <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-gradient-to-bl from-primary-100 to-transparent rounded-full filter blur-3xl opacity-30 -z-10" />
-      
+    <div className="relative max-w-4xl mx-auto">
       <motion.form
         onSubmit={handleSubmit}
-        className="relative space-y-8 bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-gray-100"
+        className="relative space-y-8 bg-white rounded-xl p-6 shadow-sm border border-gray-100 w-full"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <motion.div className="space-y-3 text-center mb-8" variants={itemVariants}>
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary-50 to-primary-100 mb-4 mx-auto">
-            <Truck className="h-8 w-8 text-primary-600" />
+        <motion.div className="space-y-3 text-center mb-6" variants={itemVariants}>
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary-50 mb-3 mx-auto">
+            <Truck className="h-6 w-6 text-primary-600" />
           </div>
-          <h3 className="text-3xl font-bold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-400">
+          <h3 className="text-2xl font-bold text-gray-900">
             Choose Your Service
           </h3>
-          <p className="text-gray-600 max-w-lg mx-auto">
-            Select the perfect moving solution for your needs. We offer flexible options to match every move.
+          <p className="text-gray-600 max-w-md mx-auto">
+            Select the perfect moving solution for your needs.
           </p>
         </motion.div>
         

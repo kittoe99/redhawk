@@ -78,10 +78,13 @@ export function DateSelectionStep({ movingDate, timePreference, onNext, onBack }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
-      <div className="space-y-3">
-        <h3 className="text-xl font-semibold text-gray-900">Select Moving Date</h3>
-        <p className="text-sm text-gray-600">Choose your preferred moving date and time</p>
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto w-full">
+      <div className="space-y-2 text-center mb-6">
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary-50 mb-3 mx-auto">
+          <Calendar className="h-6 w-6 text-primary-600" />
+        </div>
+        <h3 className="text-2xl font-bold text-gray-900">Select Moving Date</h3>
+        <p className="text-gray-600">Choose your preferred moving date and time</p>
       </div>
 
       {/* Date Selection */}

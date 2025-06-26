@@ -85,15 +85,15 @@ export function HeroSection() {
   ]
 
   return (
-    <section className="relative pt-16 pb-0 md:pt-24 md:pb-0 bg-white w-full">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl mt-8 md:mt-12 lg:mt-16">
-        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+    <section className="relative pt-16 pb-0 bg-white w-full">
+      <div className="container mx-auto px-4 max-w-7xl mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           {/* Left Column - Text Content */}
           <div className="relative z-10">
             <div className="absolute -top-10 -left-10 w-40 h-40 bg-primary-50 rounded-full opacity-20 blur-xl"></div>
 
-            <div className="inline-flex items-center gap-1 sm:gap-2 px-3 py-1 sm:px-4 sm:py-2 mb-4 sm:mb-6 rounded-full bg-primary-600 text-white font-medium text-xs sm:text-sm border-[1px] border-primary-700 shadow-sm">
-              <span className="flex h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-white animate-pulse"></span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-primary-600 text-white font-medium text-sm border border-primary-700 shadow-sm">
+              <span className="flex h-2 w-2 rounded-full bg-white animate-pulse"></span>
               Moving Help Marketplace
               <svg
                 viewBox="0 0 24 24"
@@ -112,7 +112,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
               </svg>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-900 mb-4 sm:mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-6 leading-tight">
               Book Moving Help From{" "}
               <span className="text-primary-600 relative">
                 $69/Hour
@@ -128,13 +128,12 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
               </span>
             </h1>
 
-            <p className="text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-lg leading-relaxed text-secondary-600">
+            <p className="text-base mb-8 max-w-lg leading-relaxed text-secondary-600">
               Get matched with verified independent moving helpers in your area.
             </p>
 
-            <div className="mb-8 sm:mb-10 relative">
-              {/* Main container - clean light design */}
-              <div className="relative bg-white p-4 sm:p-6 md:p-8 rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div className="mb-10 relative">
+              <div className="relative bg-white p-6 md:p-8 rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                 {/* Subtle accent in corner */}
                 <div className="absolute top-0 right-0 w-16 h-16 bg-primary-50 rounded-bl-full -z-10"></div>
 
@@ -274,8 +273,8 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 max-w-6xl mx-auto">
             {/* Apartment Moves */}
             <Link href="/apartment-moves" className="block">
-              <div className="group bg-white rounded-xl sm:rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
-                <div className="relative h-32 sm:h-40 md:h-48">
+              <div className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
+                <div className="relative h-48">
                   <Image
                     src="/services/apartment-moving-red.png"
                     alt="Apartment moving services"

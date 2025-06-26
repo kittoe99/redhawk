@@ -64,18 +64,16 @@ export function DestinationAddressStep({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
-      <div className="space-y-3">
-        <h3 className="text-xl font-semibold text-gray-900">Destination Address</h3>
-        <p className="text-sm text-gray-600">Where are we moving your items to?</p>
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto w-full">
+      <div className="space-y-2 text-center mb-6">
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary-50 mb-3 mx-auto">
+          <MapPin className="h-6 w-6 text-primary-600" />
+        </div>
+        <h3 className="text-2xl font-bold text-gray-900">Destination Address</h3>
+        <p className="text-gray-600">Where are we moving your items to?</p>
       </div>
 
       <div className="space-y-6">
-        <div className="flex items-center">
-          <MapPin className="h-5 w-5 text-primary-600 mr-2" />
-          <label className="text-sm font-medium text-gray-700">Destination Details</label>
-        </div>
-
         <div className="space-y-4">
           <div className="space-y-2">
             <label htmlFor="destinationAddress" className="flex items-center text-sm font-medium text-gray-700">
@@ -83,7 +81,7 @@ export function DestinationAddressStep({
               Street Address
             </label>
             <div className="relative w-full">
-              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 pointer-events-none">
+              <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
                 <Home className="h-5 w-5" />
               </div>
               <Input

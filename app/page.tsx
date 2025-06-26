@@ -5,7 +5,7 @@ import Script from "next/script"
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
+    <>
       <Script id="marketplace-schema" type="application/ld+json">
         {`
     {
@@ -57,6 +57,6 @@ export default function Home() {
       <MainNav />
       <HeroSection />
       <HawkFooter />
-    </div>
+    </>
   )
 }

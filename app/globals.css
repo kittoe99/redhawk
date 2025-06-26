@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
   --background-light-red: #fff1f1;
   --brand-primary: #d30000;
   --brand-secondary: #b30000;
@@ -13,16 +12,16 @@
 /* Base styles */
 html {
   scroll-behavior: smooth;
-  background-color: white;
+  background-color: var(--background-primary);
 }
 
 body {
-  color: #1a1a1a; /* Dark gray for better readability */
-  background-color: white;
+  color: #1a1a1a;
+  background-color: var(--background-primary);
   -webkit-overflow-scrolling: touch;
 }
 
-/* Reset background overrides */
+/* Ensure images maintain transparency */
 img,
 [class*="image"],
 [class*="img"],
@@ -35,34 +34,18 @@ img,
   background: transparent;
 }
 
-/* Ensure text is always visible */
+/* Text elements */
 h1, h2, h3, h4, h5, h6,
 p, span, div, a {
   color: inherit;
 }
 
-/* Remove background overrides for content areas */
+/* Main content areas */
 body > main,
 body > div,
 section,
 article {
-  background-color: white;
-}
-
-/* Mobile-specific styles */
-@media (max-width: 768px) {
-  html, body {
-    background-color: white;
-    color: #1a1a1a;
-  }
-}
-
-/* iOS Safari specific fixes */
-@supports (-webkit-touch-callout: none) {
-  html, body {
-    background-color: white;
-    color: #1a1a1a;
-  }
+  background-color: var(--background-primary);
 }
 
 /* Custom border styles for the site */

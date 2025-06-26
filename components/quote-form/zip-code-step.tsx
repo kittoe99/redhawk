@@ -61,39 +61,52 @@ export function ZipCodeStep({ zipCode, onNext }: ZipCodeStepProps) {
   return (
     <motion.form
       onSubmit={handleSubmit}
-      className="space-y-8"
+      className="space-y-8 w-full max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-sm border border-gray-100"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      <motion.div className="space-y-3" variants={itemVariants}>
+      <motion.div className="space-y-3 text-center" variants={itemVariants}>
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-50 mb-4 mx-auto">
+          <MapPin className="h-8 w-8 text-primary-600" />
+        </div>
         <h3 className="text-2xl font-bold text-gray-900">Where are you moving?</h3>
-        <p className="text-gray-600">Enter your zip code so we can check if we service your area</p>
+        <p className="text-gray-600 max-w-md mx-auto">Enter your zip code to check service availability in your area</p>
       </motion.div>
 
-      <motion.div className="relative w-full mx-auto" variants={itemVariants}>
-        <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
-          <MapPin className="h-6 w-6" />
+      <motion.div className="relative w-full" variants={itemVariants}>
+        <div className="flex items-center">
+          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
+            <MapPin className="h-5 w-5" />
+          </div>
+          <Input
+            type="text"
+            placeholder="Enter zip code"
+            value={value}
+            onChange={(e) => {
+              setValue(e.target.value)
+              setError("")
+            }}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            className={`pl-10 w-full text-base py-3 h-auto rounded-lg ${
+              isFocused
+                ? "border-primary-500 ring-2 ring-primary-100"
+                : error
+                  ? "border-red-300 ring-2 ring-red-100"
+                  : "border-gray-200 hover:border-gray-300"
+            } text-gray-900`}
+            maxLength={10}
+          />
+          <Button 
+            type="submit" 
+            className="ml-2 bg-primary-600 hover:bg-primary-700 text-white"
+            disabled={!isValid}
+          >
+            Continue
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
         </div>
-        <Input
-          type="text"
-          placeholder="Enter zip code"
-          value={value}
-          onChange={(e) => {
-            setValue(e.target.value)
-            setError("")
-          }}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          className={`pl-14 w-full text-lg py-6 h-auto rounded-xl ${
-            isFocused
-              ? "border-primary-500 ring-2 ring-primary-100"
-              : error
-                ? "border-red-300 ring-2 ring-red-100"
-                : "border-gray-200 hover:border-gray-300"
-          } text-gray-900`}
-          maxLength={10}
-        />
         {error && (
           <p className="mt-2 text-sm text-red-600 flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">

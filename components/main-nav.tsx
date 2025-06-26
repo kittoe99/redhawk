@@ -162,7 +162,7 @@ export function MainNav() {
       } ${inter.variable} ${montserrat.variable}`}
     >
       {/* Top utility navigation */}
-      <div className="bg-gray-100 text-gray-700 hidden md:block">
+      <div className="bg-gray-100 text-gray-700">
         <div className="container mx-auto flex items-center justify-between h-10 px-4 max-w-7xl">
           <div className="flex items-center space-x-2">
             <MapPin className="h-3 w-3 text-primary-600" />
@@ -203,7 +203,7 @@ export function MainNav() {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center justify-between flex-1 ml-10">
+            <div className="flex items-center justify-between flex-1 ml-10">
               <nav className="flex items-center space-x-8">
                 {mainNavItems.map((item) => (
                   <Link
@@ -295,7 +295,7 @@ export function MainNav() {
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center space-x-2">
+            <div className="flex items-center space-x-2">
               <Link
                 href="/service-type"
                 className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded text-sm font-bold transition-colors"
@@ -317,7 +317,7 @@ export function MainNav() {
       {/* Mobile Menu - Simplified */}
       {isMenuOpen && (
         <div
-          className="md:hidden fixed inset-0 z-50 bg-gray-900/50 backdrop-blur-sm"
+          className="fixed inset-0 z-50 bg-gray-900/50 backdrop-blur-sm"
           onClick={() => setIsMenuOpen(false)}
         >
           <div
