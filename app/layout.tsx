@@ -6,6 +6,7 @@ import "./hawk-loader.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { HawkLoader } from "@/components/hawk-loader"
 import { LoaderProvider } from "@/contexts/loader-context"
+import { MainNav } from "@/components/main-nav"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -106,13 +107,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${montserrat.variable} scroll-smooth`}>
-      <body className="bg-white">
+      <body className="bg-white min-h-screen flex flex-col">
         <LoaderProvider>
           <HawkLoader />
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-            <div className="pt-16">
-              {children}
-            </div>
+            <MainNav />
+            <main className="flex-1 w-full">
+              <div className="w-full">
+                {children}
+              </div>
+            </main>
           </ThemeProvider>
         </LoaderProvider>
       </body>

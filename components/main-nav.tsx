@@ -159,11 +159,11 @@ export function MainNav() {
     <header
       className={`w-full fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled ? "bg-white shadow-sm" : "bg-white"
-      } ${inter.variable} ${montserrat.variable}`}
+      } ${inter.variable} ${montserrat.variable} border-b border-gray-200`}
     >
       {/* Top utility navigation */}
-      <div className="bg-gray-100 text-gray-700">
-        <div className="container mx-auto flex items-center justify-between h-10 px-4 max-w-7xl">
+      <div className="bg-gray-100 text-gray-700 w-full">
+        <div className="w-full max-w-7xl mx-auto flex items-center justify-between h-10 px-4">
           <div className="flex items-center space-x-2">
             <MapPin className="h-3 w-3 text-primary-600" />
             <span className="text-xs">Service Areas Across the US</span>
@@ -194,8 +194,8 @@ export function MainNav() {
       </div>
 
       {/* Main navigation */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="container mx-auto px-4 max-w-7xl">
+      <div className="bg-white w-full">
+        <div className="w-full max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center">
@@ -203,7 +203,7 @@ export function MainNav() {
             </div>
 
             {/* Desktop Navigation - Hidden on mobile */}
-            <div className="hidden md:flex items-center justify-between flex-1 ml-10">
+            <div className="hidden lg:flex items-center justify-between flex-1 ml-10">
               <nav className="flex items-center space-x-8">
                 {mainNavItems.map((item) => (
                   <Link
@@ -295,7 +295,7 @@ export function MainNav() {
             </div>
 
             {/* Mobile Menu Button - Hidden on desktop */}
-            <div className="md:hidden flex items-center space-x-2">
+            <div className="lg:hidden flex items-center space-x-2">
               <Link
                 href="/quote"
                 className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded text-sm font-bold transition-colors"
@@ -315,9 +315,11 @@ export function MainNav() {
       </div>
 
       {/* Mobile Menu - Hidden on desktop */}
-      <div className={`md:hidden fixed inset-0 z-50 transition-all duration-300 ease-in-out ${
-        isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
-      }`}>
+      <div 
+        className={`fixed inset-0 z-50 transition-all duration-300 ease-in-out ${
+          isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
+        }`}
+      >
         {/* Overlay */}
         <div 
           className="absolute inset-0 bg-gray-900/50 backdrop-blur-sm"
@@ -333,7 +335,7 @@ export function MainNav() {
         >
           <div className="flex flex-col h-full">
             {/* Header */}
-            <div className="sticky top-0 bg-white border-b p-4 z-10">
+            <div className="sticky top-0 bg-white nav-border-b p-4 z-10">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg font-semibold text-gray-900">Menu</h2>
                 <button
@@ -347,7 +349,7 @@ export function MainNav() {
             </div>
 
             {/* Search Section */}
-            <div className="p-4 border-b">
+            <div className="p-4 nav-border-b">
               <div className="relative">
                 <div className="flex items-center border rounded-lg focus-within:ring-1 focus-within:ring-primary-500 focus-within:border-primary-500">
                   <input
@@ -420,7 +422,7 @@ export function MainNav() {
             </div>
 
             {/* Quick Actions */}
-            <div className="p-4 border-b">
+            <div className="p-4 nav-border-b">
               <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3">Quick Actions</h3>
               <div className="grid grid-cols-2 gap-3">
                 <Link
@@ -471,7 +473,7 @@ export function MainNav() {
             </nav>
 
             {/* Account Links */}
-            <div className="border-t border-gray-200 p-4">
+            <div className="nav-border-t p-4">
               <div className="grid grid-cols-2 gap-3">
                 <Link
                   href="/login"

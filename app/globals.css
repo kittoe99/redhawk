@@ -7,6 +7,7 @@
   --brand-primary: #d30000;
   --brand-secondary: #b30000;
   --background-primary: #ffffff;
+  --border-default: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Base styles */
@@ -17,8 +18,68 @@ html {
 
 body {
   color: #1a1a1a;
-  background-color: var(--background-primary);
+  background-color: #ffffff;
   -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Allow text selection in content areas */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body *::selection {
+  background: rgba(211, 0, 0, 0.1);
+  color: inherit;
+}
+
+/* Fix for iOS input zoom */
+
+/* Fix for iOS input zoom */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Fix for mobile hover states */
+@media (hover: hover) and (pointer: fine) {
+  button:hover, a:hover {
+    opacity: 0.9;
+  }
+}
+
+/* Location cards */
+.grid.grid-cols-2.md\:grid-cols-3.lg\:grid-cols-5 .bg-white {
+  border-width: 1.5px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.grid.grid-cols-2.md\:grid-cols-3.lg\:grid-cols-5 .bg-white:hover {
+  border-color: var(--brand-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Navigation border styles */
+.nav-border {
+  border: var(--border-default);
+}
+
+.nav-border-b {
+  border-bottom: var(--border-default);
+}
+
+.nav-border-t {
+  border-top: var(--border-default);
+}
+
+.nav-border-l {
+  border-left: var(--border-default);
+}
+
+.nav-border-r {
+  border-right: var(--border-default);
 }
 
 /* Ensure images maintain transparency */
