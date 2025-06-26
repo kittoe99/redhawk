@@ -69,6 +69,42 @@ export function HeroSection() {
     </svg>
   )
 
+  // Define service type
+  type Service = {
+    id: string;
+    name: string;
+    description: string;
+    image: string;
+  };
+
+  // Services data
+  const services: Service[] = [
+    {
+      id: "apartment",
+      name: "Apartment Moves",
+      description: "Efficient moving help for apartments, condos, and smaller spaces.",
+      image: "/services/apartment-moving-red.png"
+    },
+    {
+      id: "large",
+      name: "Large Moves",
+      description: "Complete house and large property relocations with experienced teams.",
+      image: "/services/house-moving-red.png"
+    },
+    {
+      id: "labor",
+      name: "Labor Only",
+      description: "Professional moving labor for loading, unloading, and heavy lifting.",
+      image: "/services/labor-only-red.png"
+    },
+    {
+      id: "junk",
+      name: "Junk Removal",
+      description: "Efficient removal and disposal of unwanted items during your move.",
+      image: "/services/junk-removal-red.png"
+    }
+  ]
+
   // Service cities data with images
   const serviceCities = [
     { name: "Austin", state: "TX", color: "bg-blue-50" },
@@ -85,7 +121,7 @@ export function HeroSection() {
   ]
 
   return (
-    <section className="relative pt-16 pb-0 bg-white w-full">
+    <section className="relative pt-8 pb-0 bg-white w-full">
       <div className="container mx-auto px-4 max-w-7xl mt-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           {/* Left Column - Text Content */}
@@ -271,99 +307,31 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 max-w-6xl mx-auto">
-            {/* Apartment Moves */}
-            <Link href="/apartment-moves" className="block">
-              <div className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
-                <div className="relative h-48">
-                  <Image
-                    src="/services/apartment-moving-red.png"
-                    alt="Apartment moving services"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                  <div className="absolute bottom-3 left-3 right-3">
-                    <h3 className="text-white text-sm sm:text-base md:text-lg font-bold leading-tight">
-                      Apartment Moves
-                    </h3>
+            {services.map((service) => (
+              <Link key={service.id} href={`/${service.id === 'apartment' ? 'apartment-moves' : service.id === 'large' ? 'large-moves' : service.id === 'labor' ? 'labor-only' : service.id === 'junk' ? 'junk-removal' : 'quote'}`} className="block">
+                <div className="group bg-white rounded-xl sm:rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden h-full flex flex-col">
+                  <div className="relative h-32 sm:h-40 md:h-48">
+                    <Image
+                      src={service.image}
+                      alt={`${service.name} services`}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                    <div className="absolute bottom-3 left-3 right-3">
+                      <h3 className="text-white text-sm sm:text-base md:text-lg font-bold leading-tight">
+                        {service.name}
+                      </h3>
+                    </div>
+                  </div>
+                  <div className="p-3 sm:p-4 flex-grow flex flex-col">
+                    <p className="text-xs sm:text-sm text-secondary-600 leading-relaxed flex-grow">
+                      {service.description}
+                    </p>
                   </div>
                 </div>
-                <div className="p-3 sm:p-4">
-                  <p className="text-xs sm:text-sm text-secondary-600 leading-relaxed">
-                    Efficient moving help for apartments, condos, and smaller spaces.
-                  </p>
-                </div>
-              </div>
-            </Link>
-
-            {/* Large Moves */}
-            <Link href="/large-moves" className="block">
-              <div className="group bg-white rounded-xl sm:rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
-                <div className="relative h-32 sm:h-40 md:h-48">
-                  <Image
-                    src="/services/house-moving-red.png"
-                    alt="House moving services"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                  <div className="absolute bottom-3 left-3 right-3">
-                    <h3 className="text-white text-sm sm:text-base md:text-lg font-bold leading-tight">Large Moves</h3>
-                  </div>
-                </div>
-                <div className="p-3 sm:p-4">
-                  <p className="text-xs sm:text-sm text-secondary-600 leading-relaxed">
-                    Complete house and large property relocations with experienced teams.
-                  </p>
-                </div>
-              </div>
-            </Link>
-
-            {/* Labor Only */}
-            <Link href="/labor-only" className="block">
-              <div className="group bg-white rounded-xl sm:rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
-                <div className="relative h-32 sm:h-40 md:h-48">
-                  <Image
-                    src="/services/labor-only-red.png"
-                    alt="Labor only moving services"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                  <div className="absolute bottom-3 left-3 right-3">
-                    <h3 className="text-white text-sm sm:text-base md:text-lg font-bold leading-tight">Labor Only</h3>
-                  </div>
-                </div>
-                <div className="p-3 sm:p-4">
-                  <p className="text-xs sm:text-sm text-secondary-600 leading-relaxed">
-                    Professional moving labor for loading, unloading, and heavy lifting.
-                  </p>
-                </div>
-              </div>
-            </Link>
-
-            {/* Junk Removal */}
-            <Link href="/junk-removal" className="block">
-              <div className="group bg-white rounded-xl sm:rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
-                <div className="relative h-32 sm:h-40 md:h-48">
-                  <Image
-                    src="/services/junk-removal-red.png"
-                    alt="Junk removal services"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                  <div className="absolute bottom-3 left-3 right-3">
-                    <h3 className="text-white text-sm sm:text-base md:text-lg font-bold leading-tight">Junk Removal</h3>
-                  </div>
-                </div>
-                <div className="p-3 sm:p-4">
-                  <p className="text-xs sm:text-sm text-secondary-600 leading-relaxed">
-                    Efficient removal and disposal of unwanted items during your move.
-                  </p>
-                </div>
-              </div>
-            </Link>
+              </Link>
+            ))}
           </div>
 
           {/* Call to Action */}

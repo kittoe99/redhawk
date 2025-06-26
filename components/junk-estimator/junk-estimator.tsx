@@ -1,14 +1,15 @@
 "use client"
 
-import { useState, useEffect } from "react"
+"use client"
+
+import { useState, useEffect, useRef } from "react"
+import { useRouter } from "next/navigation"
+import { format } from "date-fns"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { JunkItem, junkItems } from "./junk-items-data"
-import { SearchBar } from "./search-bar"
-import { OrderSummary } from "./order-summary"
-import { ServiceFeatures } from "./service-features"
-import { CheckCircle, ChevronDown, MapPin, Shield, ArrowRight, Plus, Minus, X } from "lucide-react"
+import { CheckCircle, ChevronDown, MapPin, Shield, ArrowRight, Plus, Minus, X, Calendar, Clock, AlertCircle } from "lucide-react"
 import Image from "next/image"
+import { useToast } from "@/components/ui/use-toast"
 
 export type SelectedItem = {
   id: string
@@ -178,23 +179,46 @@ function ZipCodeStep({
 }
 
 export function JunkEstimator() {
-  type Step = "zip_code" | "selection" | "summary" | "booking"
+  type Step = "zip_code" | "selection" | "summary" | "booking" | "thank_you"
   const [currentStep, setCurrentStep] = useState<Step>("zip_code")
   const [zipCode, setZipCode] = useState("")
   const [isValidZip, setIsValidZip] = useState(false)
-  const [bookingData, setBookingData] = useState({
-    address: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    appointmentDate: "",
-    timeSlot: "",
+  const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
-    specialInstructions: "",
+    address: "",
+    city: "",
+    state: "",
+    zipCode: zipCode,
+    preferredDate: "",
+    timeWindow: "",
+    specialInstructions: ""
   })
+
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { toast } = useToast()
+  const router = useRouter()
+
+  // Handle form input changes
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+    
+    // Clear error when user types
+    if (formErrors[name]) {
+      setFormErrors(prev => ({
+        ...prev,
+        [name]: ""
+      }))
+    }
+  }
+
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([])
   const [searchQuery, setSearchQuery] = useState("")
   const [showAllItems, setShowAllItems] = useState(false)
@@ -230,7 +254,7 @@ export function JunkEstimator() {
     const isValid = validateZipCode(value)
     setIsValidZip(isValid)
     if (isValid) {
-      setBookingData((prev) => ({ ...prev, zipCode: value }))
+      setFormData((prev) => ({ ...prev, zipCode: value }))
     }
   }
 
@@ -287,7 +311,84 @@ export function JunkEstimator() {
     setSelectedItems((prev) => prev.filter((item) => item.id !== itemId));
   };
 
-  const totalPrice = selectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  // Calculate total price
+  const totalPrice = selectedItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  )
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    // Validate form
+    const errors: Record<string, string> = {}
+    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'state', 'zipCode', 'preferredDate']
+    
+    requiredFields.forEach(field => {
+      if (!formData[field as keyof typeof formData]) {
+        errors[field] = 'This field is required'
+      }
+    })
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (formData.email && !emailRegex.test(formData.email)) {
+      errors.email = 'Please enter a valid email address'
+    }
+
+    // Phone validation (basic)
+    const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
+    if (formData.phone && !phoneRegex.test(formData.phone)) {
+      errors.phone = 'Please enter a valid phone number'
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors)
+      return
+    }
+
+    setIsSubmitting(true)
+
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      // Show success message
+      toast({
+        title: "Booking Confirmed!",
+        description: "We've received your booking request. Our team will contact you shortly to confirm the details.",
+      })
+      
+      // Reset form
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        address: "",
+        city: "",
+        state: "",
+        zipCode: zipCode,
+        preferredDate: "",
+        timeWindow: "",
+        specialInstructions: ""
+      })
+      
+      // Go to thank you page
+      setCurrentStep("thank_you")
+      
+    } catch (error) {
+      console.error("Error submitting form:", error)
+      toast({
+        title: "Error",
+        description: "There was an error submitting your booking. Please try again.",
+        variant: "destructive"
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   // Render the appropriate step
   const renderStep = () => {
@@ -560,89 +661,209 @@ export function JunkEstimator() {
         )
       case "booking":
         return (
-          <div className="bg-white p-8">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-8">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="bg-gradient-to-b from-gray-50 to-white py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <div className="w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">Book Your Junk Removal</h2>
-                <p className="text-gray-600">Complete your booking to schedule your service</p>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                  Book Your Junk Removal
+                </h2>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto">Complete your booking details and our team will contact you shortly</p>
               </div>
 
-              <div className="grid lg:grid-cols-3 gap-8">
+              <div className="grid lg:grid-cols-3 gap-8 items-start">
                 {/* Left Column - Booking Form */}
                 <div className="lg:col-span-2">
-                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                    <h3 className="text-xl font-semibold text-gray-900 mb-6">Service Details</h3>
+                  <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100">
+                    <div className="flex items-center mb-8">
+                      <div className="w-1.5 h-8 bg-gradient-to-b from-primary-500 to-primary-600 rounded-full mr-3"></div>
+                      <h3 className="text-2xl font-bold text-gray-900">Service Details</h3>
+                    </div>
                     
-                    <div className="space-y-6">
+                    <div className="space-y-8">
                       {/* Contact Information */}
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div className="relative">
                           <label className="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
-                          <Input
-                            type="text"
-                            placeholder="Enter your first name"
-                            className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-colors"
-                          />
+                          <div className="relative">
+                            <Input
+                              type="text"
+                              name="firstName"
+                              value={formData.firstName}
+                              onChange={handleInputChange}
+                              placeholder="John"
+                              className="w-full px-4 pl-12 py-3.5 rounded-xl border-2 border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-200"
+                              required
+                            />
+                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                            {formErrors.firstName && (
+                              <p className="text-red-500 text-sm mt-2">{formErrors.firstName}</p>
+                            )}
+                          </div>
                         </div>
-                        <div>
+                        <div className="relative">
                           <label className="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
-                          <Input
-                            type="text"
-                            placeholder="Enter your last name"
-                            className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-colors"
-                          />
+                          <div className="relative">
+                            <Input
+                              type="text"
+                              name="lastName"
+                              value={formData.lastName}
+                              onChange={handleInputChange}
+                              placeholder="Doe"
+                              className="w-full px-4 pl-12 py-3.5 rounded-xl border-2 border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-200"
+                              required
+                            />
+                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                            {formErrors.lastName && (
+                              <p className="text-red-500 text-sm mt-2">{formErrors.lastName}</p>
+                            )}
+                          </div>
                         </div>
                       </div>
 
                       <div className="grid md:grid-cols-2 gap-4">
-                        <div>
+                        <div className="relative">
                           <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
-                          <Input
-                            type="email"
-                            placeholder="your@email.com"
-                            className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-colors"
-                          />
+                          <div className="relative">
+                            <Input
+                              type="email"
+                              name="email"
+                              value={formData.email}
+                              onChange={handleInputChange}
+                              placeholder="your@email.com"
+                              className="w-full px-4 pl-12 py-3.5 rounded-xl border-2 border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-200"
+                              required
+                            />
+                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                              </svg>
+                            </div>
+                            {formErrors.email && (
+                              <p className="text-red-500 text-sm mt-2">{formErrors.email}</p>
+                            )}
+                          </div>
                         </div>
-                        <div>
+                        <div className="relative">
                           <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
-                          <Input
-                            type="tel"
-                            placeholder="(555) 123-4567"
-                            className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-colors"
-                          />
+                          <div className="relative">
+                            <Input
+                              type="tel"
+                              name="phone"
+                              value={formData.phone}
+                              onChange={handleInputChange}
+                              placeholder="(555) 123-4567"
+                              className="w-full px-4 pl-12 py-3.5 rounded-xl border-2 border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-200"
+                              required
+                            />
+                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                              </svg>
+                            </div>
+                            {formErrors.phone && (
+                              <p className="text-red-500 text-sm mt-2">{formErrors.phone}</p>
+                            )}
+                          </div>
                         </div>
                       </div>
 
                       {/* Service Address */}
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Service Address *</label>
-                        <Input
-                          type="text"
-                          placeholder="Enter full address"
-                          className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-colors mb-3"
-                        />
-                        <div className="grid md:grid-cols-3 gap-3">
+                      <div className="space-y-4">
+                        <h4 className="text-lg font-semibold text-gray-800 flex items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-primary-600" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                          </svg>
+                          Service Address
+                        </h4>
+                        <div className="relative">
                           <Input
                             type="text"
-                            placeholder="City"
-                            className="px-4 py-3 rounded-xl border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-colors"
+                            name="address"
+                            value={formData.address}
+                            onChange={handleInputChange}
+                            placeholder="Enter street address"
+                            className="w-full px-4 pl-12 py-3.5 rounded-xl border-2 border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-200"
+                            required
                           />
-                          <Input
-                            type="text"
-                            placeholder="State"
-                            className="px-4 py-3 rounded-xl border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-colors"
-                          />
-                          <Input
-                            type="text"
-                            placeholder="ZIP Code"
-                            defaultValue={zipCode}
-                            className="px-4 py-3 rounded-xl border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-colors"
-                          />
+                          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                            </svg>
+                          </div>
+                          {formErrors.address && (
+                            <p className="text-red-500 text-sm mt-2">{formErrors.address}</p>
+                          )}
+                        </div>
+                        <div className="grid md:grid-cols-3 gap-4">
+                          <div className="relative">
+                            <Input
+                              type="text"
+                              name="city"
+                              value={formData.city}
+                              onChange={handleInputChange}
+                              placeholder="City"
+                              className="w-full px-4 pl-12 py-3.5 rounded-xl border-2 border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-200"
+                              required
+                            />
+                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                            {formErrors.city && (
+                              <p className="text-red-500 text-sm mt-2">{formErrors.city}</p>
+                            )}
+                          </div>
+                          <div>
+                            <select 
+                              name="state"
+                              value={formData.state}
+                              onChange={handleInputChange}
+                              className="w-full px-4 py-3.5 rounded-xl border-2 border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-200 bg-white text-gray-700"
+                              required
+                            >
+                              <option value="">Select State</option>
+                              <option value="CA">California</option>
+                              <option value="NY">New York</option>
+                              <option value="TX">Texas</option>
+                            </select>
+                            {formErrors.state && (
+                              <p className="text-red-500 text-sm mt-2">{formErrors.state}</p>
+                            )}
+                          </div>
+                          <div className="relative">
+                            <Input
+                              type="text"
+                              name="zipCode"
+                              value={formData.zipCode}
+                              onChange={handleInputChange}
+                              placeholder="ZIP Code"
+                              className="w-full px-4 pl-12 py-3.5 rounded-xl border-2 border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-200"
+                              required
+                            />
+                            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                            {formErrors.zipCode && (
+                              <p className="text-red-500 text-sm mt-2">{formErrors.zipCode}</p>
+                            )}
+                          </div>
                         </div>
                       </div>
 
@@ -652,12 +873,23 @@ export function JunkEstimator() {
                           <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Date *</label>
                           <Input
                             type="date"
+                            name="preferredDate"
+                            value={formData.preferredDate}
+                            onChange={handleInputChange}
                             className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-colors"
                           />
+                          {formErrors.preferredDate && (
+                            <p className="text-red-500 text-sm mt-2">{formErrors.preferredDate}</p>
+                          )}
                         </div>
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Time</label>
-                          <select className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-colors bg-white">
+                          <select 
+                            name="timeWindow"
+                            value={formData.timeWindow}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-colors bg-white"
+                          >
                             <option value="">Select time</option>
                             <option value="morning">Morning (8AM - 12PM)</option>
                             <option value="afternoon">Afternoon (12PM - 4PM)</option>
@@ -670,13 +902,16 @@ export function JunkEstimator() {
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Special Instructions</label>
                         <textarea
+                          name="specialInstructions"
+                          value={formData.specialInstructions}
+                          onChange={handleInputChange}
                           rows={4}
                           placeholder="Any special instructions or access notes..."
                           className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-colors resize-none"
                         ></textarea>
                       </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
 
                 {/* Right Column - Order Summary */}
@@ -730,12 +965,27 @@ export function JunkEstimator() {
                     {/* Action Buttons */}
                     <div className="space-y-3">
                       <Button
-                        className="w-full bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white font-medium py-3 px-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5"
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white font-medium py-3 px-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none disabled:hover:shadow-md"
                       >
-                        Book Now - ${totalPrice.toFixed(2)}
-                        <ArrowRight className="w-4 h-4 ml-2" />
+                        {isSubmitting ? (
+                          <>
+                            <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Processing...
+                          </>
+                        ) : (
+                          <>
+                            Book Now - ${totalPrice.toFixed(2)}
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                          </>
+                        )}
                       </Button>
                       <Button
+                        type="button"
                         variant="outline"
                         onClick={() => setCurrentStep("summary")}
                         className="w-full border-gray-300 text-gray-700 hover:bg-gray-50 py-3 px-6 rounded-xl transition-colors"
@@ -749,6 +999,27 @@ export function JunkEstimator() {
             </div>
           </div>
         )
+      case "thank_you":
+        return (
+          <div className="text-center py-16">
+            <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle className="w-12 h-12 text-green-600" />
+            </div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Thank You for Your Booking!</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+              We've received your booking request. Our team will contact you shortly to confirm the details.
+            </p>
+            <Button
+              onClick={() => {
+                setCurrentStep("zip_code")
+                setSelectedItems([])
+              }}
+              className="bg-primary-600 hover:bg-primary-700 px-8 py-3 text-base font-medium"
+            >
+              Start New Estimate
+            </Button>
+          </div>
+        )  
       default:
         return (
           <ZipCodeStep
