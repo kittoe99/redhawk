@@ -11,6 +11,35 @@ import { CheckCircle, ChevronDown, MapPin, Shield, ArrowRight, Plus, Minus, X, C
 import Image from "next/image"
 import { useToast } from "@/components/ui/use-toast"
 
+// Junk items data
+export const junkItems = [
+  { id: "bicycle", name: "Bicycle", price: 50, icon: "🚲", popular: true },
+  { id: "bag_of_junk", name: "Bag of Junk", price: 20, icon: "🎒", popular: true },
+  { id: "box_spring", name: "Box Spring", price: 40, icon: "🛏️", popular: true },
+  { id: "bookshelf", name: "Bookshelf", price: 60, icon: "📚", popular: true },
+  { id: "chair", name: "Chair", price: 30, icon: "🪑", popular: true },
+  { id: "couch", name: "Couch", price: 100, icon: "🛋️", popular: true },
+  { id: "grill", name: "Grill", price: 45, icon: "🍖", popular: true },
+  { id: "dresser", name: "Dresser", price: 75, icon: "👕", popular: true },
+  { id: "desk", name: "Desk", price: 65, icon: "💼", popular: true },
+  { id: "dishwasher", name: "Dishwasher", price: 80, icon: "🍽️", popular: true },
+  { id: "lawnmower", name: "Lawnmower", price: 55, icon: "🌱", popular: true },
+  { id: "mattress", name: "Mattress", price: 70, icon: "🛌", popular: true },
+  { id: "recliner", name: "Recliner", price: 90, icon: "🪑", popular: true },
+  { id: "table", name: "Table", price: 50, icon: "🪑", popular: true },
+  { id: "refrigerator", name: "Refrigerator", price: 120, icon: "❄️", popular: true },
+  { id: "treadmill", name: "Treadmill", price: 150, icon: "🏃", popular: true },
+  { id: "tv", name: "TV", price: 70, icon: "📺", popular: true },
+  { id: "washer_dryer", name: "Washer/Dryer", price: 180, icon: "🧺", popular: true },
+  { id: "exercise_machine", name: "Exercise Machine", price: 95, icon: "💪", popular: false },
+  { id: "hot_tub", name: "Hot Tub", price: 200, icon: "🛁", popular: false },
+  { id: "large_item", name: "Large Item", price: 100, icon: "📦", popular: false },
+  { id: "small_item", name: "Small Item", price: 20, icon: "📦", popular: false },
+  { id: "medium_item", name: "Medium Item", price: 40, icon: "📦", popular: false },
+  { id: "debris", name: "Debris", price: 30, icon: "🗑️", popular: false },
+  { id: "electronic_unlisted", name: "Electronic (Unlisted)", price: 50, icon: "🔌", popular: false },
+]
+
 export type SelectedItem = {
   id: string
   name: string
