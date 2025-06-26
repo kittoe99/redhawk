@@ -1,6 +1,14 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* Prevent white flash on page load */
+html {
+  background-color: #ffffff;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
 
 :root {
   --background-light-red: #fff1f1;
@@ -21,6 +29,9 @@ body {
   background-color: #ffffff;
   -webkit-overflow-scrolling: touch;
   -webkit-tap-highlight-color: transparent;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
 }
 
 /* Allow text selection in content areas */
@@ -33,9 +44,15 @@ body *::selection {
   color: inherit;
 }
 
-/* Fix for iOS input zoom */
+/* Fix for iOS input zoom and prevent zoom on focus */
+@supports (-webkit-touch-callout: none) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
 
-/* Fix for iOS input zoom */
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   input, select, textarea {
     font-size: 16px !important;
@@ -109,26 +126,35 @@ article {
   background-color: var(--background-primary);
 }
 
-/* Custom border styles for the site */
+/* Custom components */
 @layer components {
   .border-strong {
-    @apply border border-secondary-800 border-opacity-80;
+    border: 1px solid rgba(30, 41, 59, 0.8);
   }
 
   .border-strong-light {
-    @apply border border-secondary-400;
+    border: 1px solid #94a3b8;
   }
 
   .border-strong-primary {
-    @apply border border-primary-600;
+    border: 1px solid #dc2626;
   }
 
   .card-border {
-    @apply border border-secondary-300 hover:border-secondary-400 transition-colors duration-200;
+    border: 1px solid #e2e8f0;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .card-border:hover {
+    border-color: #cbd5e1;
   }
 
   .input-border {
-    @apply border border-secondary-300 focus:border-primary-600;
+    border: 1px solid #e2e8f0;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .input-border:focus {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 1px #ef4444;
   }
 }
 
