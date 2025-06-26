@@ -112,7 +112,7 @@ export default function RootLayout({
           <HawkLoader />
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
             <MainNav />
-            <main className="flex-1 w-full pt-[106px] md:pt-[116px]">
+            <main className="flex-1 w-full pt-20 md:pt-24">
               <div className="w-full">
                 {children}
               </div>
