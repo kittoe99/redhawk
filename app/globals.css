@@ -26,8 +26,106 @@ html {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: #ffffff;
+  background: #ffffff !important;
   -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure all sections have white background by default */
+section {
+  background-color: #ffffff !important;
+}
+
+/* Override any background patterns or gradients */
+.bg-pattern-primary-dots,
+.bg-gradient-to-b,
+.bg-gradient-to-t,
+.bg-gradient-to-r,
+.bg-gradient-to-l {
+  background: #ffffff !important;
+}
+
+/* Override any background colors that might be set by Tailwind */
+.bg-gray-50,
+.bg-gray-100,
+.bg-gray-200,
+.bg-gray-300,
+.bg-gray-400,
+.bg-gray-500,
+.bg-gray-600,
+.bg-gray-700,
+.bg-gray-800,
+.bg-gray-900 {
+  background-color: #ffffff !important;
+}
+
+/* Mobile-specific overrides */
+@media (max-width: 768px) {
+  body {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+  
+  html {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+  
+  div:not([class*="image"]):not([class*="img"]):not([class*="picture"]), 
+  section, 
+  main, 
+  article, 
+  aside, 
+  header, 
+  footer, 
+  nav {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+  
+  /* Override specific mobile viewport issues */
+  .min-h-screen {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+  
+  /* Override mobile-specific Tailwind classes */
+  .sm\:bg-gray-50,
+  .sm\:bg-gray-100,
+  .md\:bg-gray-50,
+  .md\:bg-gray-100,
+  .lg\:bg-gray-50,
+  .lg\:bg-gray-100 {
+    background-color: #ffffff !important;
+  }
+}
+
+/* Extra mobile devices */
+@media (max-width: 480px) {
+  body, html {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+  
+  div:not([class*="image"]):not([class*="img"]):not([class*="picture"]), 
+  section, 
+  main, 
+  article {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+}
+
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  body {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+  
+  html {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
 }
 
 /* Custom border styles for the site */
