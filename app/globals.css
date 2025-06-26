@@ -44,19 +44,6 @@ section {
   background: #ffffff !important;
 }
 
-/* Override any background colors that might be set by Tailwind */
-.bg-gray-50,
-.bg-gray-100,
-.bg-gray-200,
-.bg-gray-300,
-.bg-gray-400,
-.bg-gray-500,
-.bg-gray-600,
-.bg-gray-700,
-.bg-gray-800,
-.bg-gray-900 {
-  background-color: #ffffff !important;
-}
 
 /* Mobile-specific overrides */
 @media (max-width: 768px) {
@@ -88,15 +75,7 @@ section {
     background-color: #ffffff !important;
   }
   
-  /* Override mobile-specific Tailwind classes */
-  .sm\:bg-gray-50,
-  .sm\:bg-gray-100,
-  .md\:bg-gray-50,
-  .md\:bg-gray-100,
-  .lg\:bg-gray-50,
-  .lg\:bg-gray-100 {
-    background-color: #ffffff !important;
-  }
+
 }
 
 /* Extra mobile devices */
