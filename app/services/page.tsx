@@ -206,33 +206,35 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
 
       {/* SERVICE AREAS SECTION */}
       <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-5xl">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-3">
-              Our Service Areas
-            </h2>
-            <div className="w-16 h-1 bg-primary-600 mx-auto mb-4"></div>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              We connect you with verified moving helpers in these major metropolitan areas
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-2">Service Areas</h2>
+            <p className="text-secondary-600 max-w-2xl mx-auto">
+              Moving help available in these major cities and surrounding areas
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+          {/* All Cities in a Compact Grid */}
+          <div className="flex flex-wrap justify-center gap-2 max-w-5xl mx-auto">
             {serviceAreas.map((area) => (
-              <div
+              <Link
                 key={`${area.city}-${area.state}`}
-                className="bg-white border border-gray-100 rounded-lg p-4 text-center hover:border-primary-200 hover:bg-gray-50 transition-colors"
+                href={`/locations/${area.city.toLowerCase().replace(/\s+/g, "-")}`}
+                className="inline-flex items-center px-3 py-1.5 bg-white rounded-full border border-gray-100 shadow-sm hover:shadow hover:border-primary-100 hover:bg-primary-50 transition-all duration-300 group"
               >
-                <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-primary-50 text-primary-600 mb-3">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <h3 className="font-medium text-gray-900">{area.city}</h3>
-                <p className="text-xs text-gray-500">{area.state}</p>
-                <p className="text-xs text-gray-400 mt-1">{area.population} metro</p>
-              </div>
+                <svg 
+                  className="h-3 w-3 text-primary-600 mr-1.5" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span className="font-medium text-sm text-secondary-900 group-hover:text-primary-600 transition-colors">
+                  {area.city}, <span className="text-secondary-500">{area.state}</span>
+                </span>
+              </Link>
             ))}
           </div>
 

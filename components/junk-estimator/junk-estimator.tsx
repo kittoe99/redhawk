@@ -1,7 +1,5 @@
 "use client"
 
-"use client"
-
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { format } from "date-fns"
@@ -642,49 +640,72 @@ export function JunkEstimator() {
         )
       case "summary":
         return (
-          <div className="bg-white p-8">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Order Summary</h2>
-              <div className="bg-gray-50 rounded-xl p-6 mb-6">
-                <h3 className="text-lg font-semibold mb-4">Selected Items</h3>
-                <div className="space-y-3">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold text-gray-900 mb-3">Order Summary</h1>
+              <p className="text-gray-600">Review your items and total cost</p>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
+              <h2 className="text-xl font-semibold text-gray-900 mb-6">Selected Items</h2>
+              
+              {selectedItems.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-gray-500">No items selected</p>
+                  <Button 
+                    onClick={() => setCurrentStep("selection")}
+                    className="mt-4 bg-primary-600 hover:bg-primary-700"
+                  >
+                    Add Items
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-4">
                   {selectedItems.map((item) => (
-                    <div key={item.id} className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <div key={item.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                       <div className="flex items-center">
-                        <div className="w-10 h-10 flex items-center justify-center bg-primary-50 rounded-lg mr-3">
-                          <JunkItemIcon itemId={item.id} className="w-6 h-6 text-primary-600" />
+                        <div className="w-12 h-12 flex items-center justify-center bg-white rounded-lg mr-4">
+                          <JunkItemIcon itemId={item.id} className="w-8 h-8 text-primary-600" />
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-gray-800">{item.name}</p>
-                          <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
+                          <h3 className="font-medium text-gray-900">{item.name}</h3>
+                          <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
                         </div>
                       </div>
-                      <p className="font-semibold">${(item.price * item.quantity).toFixed(2)}</p>
+                      <div className="text-right">
+                        <p className="font-semibold text-gray-900">${(item.price * item.quantity).toFixed(2)}</p>
+                        <p className="text-sm text-gray-500">${item.price} each</p>
+                      </div>
                     </div>
                   ))}
                 </div>
-                <div className="mt-6 pt-4 border-t border-gray-200">
-                  <div className="flex justify-between text-lg font-semibold">
-                    <span>Total:</span>
-                    <span>${totalPrice.toFixed(2)}</span>
-                  </div>
+              )}
+
+              <div className="border-t pt-6 mt-6">
+                <div className="flex justify-between items-center text-xl font-bold">
+                  <span>Total Estimate:</span>
+                  <span className="text-primary-600">${totalPrice.toFixed(2)}</span>
                 </div>
+                <p className="text-sm text-gray-500 mt-2">*Final price may vary based on actual items and access conditions</p>
               </div>
-              <div className="flex justify-between">
-                <Button
-                  variant="outline"
-                  onClick={() => setCurrentStep("selection")}
-                  className="px-6 py-3"
-                >
-                  Back to Selection
-                </Button>
-                <Button
-                  onClick={() => setCurrentStep("booking")}
-                  className="bg-primary-600 hover:bg-primary-700 px-6 py-3"
-                >
-                  Proceed to Booking
-                </Button>
-              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <Button
+                onClick={() => setCurrentStep("selection")}
+                variant="outline"
+                className="flex-1 py-3 text-base"
+              >
+                Back to Items
+              </Button>
+              <Button
+                onClick={() => setCurrentStep("booking")}
+                disabled={selectedItems.length === 0}
+                className="flex-1 py-3 text-base bg-primary-600 hover:bg-primary-700"
+              >
+                Continue to Booking
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
             </div>
           </div>
         )
