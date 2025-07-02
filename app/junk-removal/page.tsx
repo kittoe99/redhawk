@@ -104,7 +104,7 @@ export default function JunkRemovalPage() {
       <MainNav />
 
       {/* HERO SECTION - Page Style Hero */}
-      <section className="relative pt-16 pb-12 md:pt-24 md:pb-16 bg-gradient-to-br from-primary-50 to-white">
+      <section className="relative pt-16 pb-12 md:pt-24 md:pb-16 bg-gradient-to-br from-primary-50 to-white overflow-hidden">
         <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-6xl">
           <div className="text-center">
             {/* Badge */}
@@ -155,7 +155,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
               <Link href="/junk-estimator">
                 <Button
                   size="lg"
-                  className="bg-primary-600 hover:bg-primary-700 text-white inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-semibold"
+                  className="bg-gradient-to-r from-primary-600 to-red-500 hover:to-red-600 shadow-lg hover:shadow-xl transform-gpu transition-all duration-300 hover:-translate-y-0.5 text-white inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-semibold"
                 >
                   Pricing
                   <ArrowRight className="h-5 w-5" />
@@ -213,7 +213,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 max-w-6xl mx-auto">
             {features.map((feature, index) => (
-              <div key={index} className="group bg-white rounded-xl sm:rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 cursor-pointer overflow-hidden">
+              <div key={index} className="group bg-white rounded-xl sm:rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-transform duration-300 hover:-translate-y-2 hover:shadow-primary-100 cursor-pointer overflow-hidden">
                 <div className="p-6">
                   <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary-50 text-primary-600 mb-4 group-hover:bg-primary-100 transition-colors duration-300">
                     <feature.icon className="h-6 w-6" />
@@ -229,7 +229,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
           <div className="text-center mt-10">
             <Link
               href="/junk-estimator"
-              className="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-700 transition-colors duration-300 shadow-sm hover:shadow-md"
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary-600 to-red-500 text-white font-medium rounded-xl hover:to-red-600 transition-all duration-300 shadow-lg hover:shadow-xl transform-gpu hover:-translate-y-0.5"
             >
               Get Your Free Estimate
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -325,7 +325,7 @@ c0.39-0.39,0.39-1.02,0-1.41L10.59,15L17,8.41V15c0,0.55,0.45,1,1,1s1-0.45,1-1V5.4
             <Link href="/junk-estimator">
               <Button
                 size="lg"
-                className="bg-primary-600 hover:bg-primary-700 text-white inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-semibold"
+                className="bg-gradient-to-r from-primary-600 to-red-500 hover:to-red-600 shadow-lg hover:shadow-xl transform-gpu transition-all duration-300 hover:-translate-y-0.5 text-white inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg font-semibold"
               >
                 Get Free Estimate
                 <ArrowRight className="h-5 w-5" />

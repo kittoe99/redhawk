@@ -6,7 +6,7 @@ import "./hawk-loader.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { HawkLoader } from "@/components/hawk-loader"
 import { LoaderProvider } from "@/contexts/loader-context"
-import { MainNav } from "@/components/main-nav"
+import { MainNavWrapper } from "@/components/main-nav-wrapper"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -111,7 +111,7 @@ export default function RootLayout({
         <LoaderProvider>
           <HawkLoader />
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-            <MainNav />
+            <MainNavWrapper />
             <main className="flex-1 w-full pt-20 md:pt-24">
               <div className="w-full">
                 {children}

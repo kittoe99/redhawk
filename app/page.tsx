@@ -1,5 +1,6 @@
 import { MainNav } from "@/components/main-nav"
 import { HeroSection } from "@/components/hero-section"
+import { CustomerTestimonialsSection } from "@/components/customer-testimonials-section"
 import { HawkFooter } from "@/components/hawk-footer"
 import Script from "next/script"
 
@@ -56,6 +57,7 @@ export default function Home() {
       </Script>
       <MainNav />
       <HeroSection />
+      <CustomerTestimonialsSection />
       <HawkFooter />
     </>
   )
