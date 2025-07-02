@@ -1,10 +1,7 @@
 "use client"
-// JunkEstimator now lives in an isolated embed page
-// import { JunkEstimator } from "@/components/junk-estimator/junk-estimator"
-import { MainNav } from "@/components/main-nav"
+import { JunkEstimator } from "@/components/junk-estimator/junk-estimator"
 import { HawkFooter } from "@/components/hawk-footer"
 import Script from "next/script"
-import { EstimatorEmbedFrame } from "@/components/estimator-embed-frame"
 
 export default function JunkEstimatorPage() {
   return (
@@ -25,15 +22,11 @@ export default function JunkEstimatorPage() {
         `}
       </Script>
 
-      <MainNav />
-
       <main className="pt-16">
         <div className="w-full">
-            {/* Embed the estimator in an iframe so it keeps its own styles/isolated scope */}
-          <EstimatorEmbedFrame
-              src="/embed/junk-estimator"
-              className="w-full border-0"
-            />
+          <div className="max-w-5xl mx-auto px-4 md:px-6 lg:px-8">
+          <JunkEstimator />
+                  </div>
         </div>
       </main>
 

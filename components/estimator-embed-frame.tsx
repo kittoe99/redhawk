@@ -11,6 +11,7 @@ export function EstimatorEmbedFrame({ src = "/embed/junk-estimator", ...rest }: 
 
   useEffect(() => {
     function handleMessage(event: MessageEvent) {
+
       if (typeof event.data === "object" && event.data?.widgetHeight) {
         const height = Number(event.data.widgetHeight)
         if (!Number.isNaN(height) && iframeRef.current) {

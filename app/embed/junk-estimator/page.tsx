@@ -2,6 +2,7 @@
 import { JunkEstimator } from "@/components/junk-estimator/junk-estimator";
 import { EmbedHeightReporter } from "@/components/embed-height-reporter";
 
+
 export const metadata = {
   title: "Junk Removal Estimator – Embed",
   description: "Embeddable version of Redhawk's junk-removal estimator form.",

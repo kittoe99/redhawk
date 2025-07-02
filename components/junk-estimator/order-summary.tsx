@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import type { SelectedItem } from "./junk-estimator"
 
 interface OrderSummaryProps {
@@ -11,21 +10,8 @@ interface OrderSummaryProps {
 }
 
 export function OrderSummary({ selectedItems, totalPrice }: OrderSummaryProps) {
-  const [promoCode, setPromoCode] = useState("")
-  const [discount, setDiscount] = useState(0)
-  const [showPriceBreakdown, setShowPriceBreakdown] = useState(false)
-
-  const handleApplyPromo = () => {
-    // In a real app, you would validate the promo code with an API
-    if (promoCode.toLowerCase() === "redhawk10") {
-      setDiscount(totalPrice * 0.1)
-    } else {
-      setDiscount(0)
-      alert("Invalid promo code")
-    }
-  }
-
-  const finalPrice = Math.max(0, totalPrice - discount)
+  const [showPriceBreakdown, setShowPriceBreakdown] = useState(true)
+  const finalPrice = totalPrice
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6">
@@ -36,23 +22,6 @@ export function OrderSummary({ selectedItems, totalPrice }: OrderSummaryProps) {
           <span className="font-medium text-gray-800 !text-gray-800">Guaranteed Price*</span>
           <span className="text-xl sm:text-2xl font-bold !text-gray-900 text-black">${finalPrice.toFixed(2)}</span>
         </div>
-      </div>
-
-      <div className="flex space-x-2 mb-3 sm:mb-4">
-        <Input
-          type="text"
-          placeholder="Promo Code"
-          value={promoCode}
-          onChange={(e) => setPromoCode(e.target.value)}
-          className="flex-1 border-gray-200"
-        />
-        <Button
-          onClick={handleApplyPromo}
-          variant="outline"
-          className="bg-primary-50 text-primary-700 border border-primary-200 hover:bg-primary-100"
-        >
-          APPLY
-        </Button>
       </div>
 
       <button
@@ -73,21 +42,13 @@ export function OrderSummary({ selectedItems, totalPrice }: OrderSummaryProps) {
             </div>
           ))}
 
-          {discount > 0 && (
-            <div className="flex justify-between text-green-600 font-medium">
-              <span>Promo Discount</span>
-              <span>-${discount.toFixed(2)}</span>
-            </div>
-          )}
-
-          <div className="flex justify-between font-medium pt-2 border-t border-gray-100">
+<div className="flex justify-between font-medium pt-2 border-t border-gray-100">
             <span>Total</span>
             <span>${finalPrice.toFixed(2)}</span>
           </div>
         </div>
       )}
 
-      <Button className="w-full">Save This Quote</Button>
     </div>
   )
 }

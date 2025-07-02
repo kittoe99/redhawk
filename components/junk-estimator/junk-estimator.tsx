@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { OrderSummary } from "@/components/junk-estimator/order-summary"
-import { ServiceFeatures } from "@/components/junk-estimator/service-features"
 import { SearchBar } from "@/components/junk-estimator/search-bar"
 import { Button } from "@/components/ui/button"
 import { junkItems } from "@/components/junk-estimator/junk-items-data"
@@ -255,10 +254,10 @@ export function JunkEstimator() {
                         <button
                           key={item.id}
                           onClick={() => addItem(item)}
-                          className={`flex flex-col items-center justify-center p-3 sm:p-4 border rounded-lg transition-all duration-200 h-24 sm:h-36 ${
+                          className={`flex flex-col items-center justify-center p-3 sm:p-4 border rounded-lg transition-all duration-200 h-24 sm:h-36 bg-white ${
                             recentlyAdded.includes(item.id)
-                              ? "border-red-400 bg-red-50 scale-105"
-                              : "border-gray-200 hover:border-primary-300 hover:bg-primary-50"
+                              ? "border-red-400 scale-105"
+                              : "border-gray-200 hover:border-primary-300"
                           }`}
                         >
                           <JunkItemIcon itemId={item.id} className="w-8 h-8 sm:w-10 sm:h-10 mb-2 sm:mb-2" />
@@ -282,10 +281,10 @@ export function JunkEstimator() {
                 <button
                   key={item.id}
                   onClick={() => addItem(item)}
-                  className={`flex flex-col items-center justify-center p-3 sm:p-4 border rounded-lg transition-all duration-200 h-24 sm:h-36 shadow-xl bg-transparent ${
+                  className={`flex flex-col items-center justify-center p-3 sm:p-4 border rounded-lg transition-all duration-200 h-24 sm:h-36 bg-white ${
                     recentlyAdded.includes(item.id)
-                      ? "border-red-400 bg-red-50 scale-105"
-                      : "border-gray-200 bg-slate-50 hover:border-primary-300 hover:bg-primary-50"
+                      ? "border-red-400 scale-105"
+                      : "border-gray-200 hover:border-primary-300"
                   }`}
                 >
                   <JunkItemIcon itemId={item.id} className="w-8 h-8 sm:w-10 sm:h-10 mb-2 sm:mb-2" />
@@ -575,9 +574,6 @@ export function JunkEstimator() {
 
       <div className="lg:w-96">
         <OrderSummary selectedItems={selectedItems} totalPrice={totalPrice} />
-        <div className="mt-6">
-          <ServiceFeatures />
-        </div>
       </div>
     </div>
   )
